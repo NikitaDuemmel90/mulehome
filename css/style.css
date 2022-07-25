@@ -27,6 +27,7 @@ main {
 	overflow: hidden; /* Disables scrollbars on the header frame. To enable scrollbars, change "hidden" to "scroll" */
 	background: #038A5E;
 }
+
 .ubtlogo{
 	float:right;
 	padding-top:0px;
@@ -67,6 +68,14 @@ footer a{
 .innertube {
 	margin: 15px; /* Provides padding for the content */
 }
+
+iframe {
+	height: 100%; 
+	max-height: 100%; 
+	width: 100%;
+	max-width: 100%;
+	/*border: none;*/
+}
 	
 p {
 	color: #555;
@@ -79,8 +88,12 @@ nav ul {
 }
 	
 nav ul a {
+	color: #038A5E;
+	/*text-decoration: none;*/
+}	
+
+nav ul a:hover {
 	color: darkgreen;
-	text-decoration: none;
 }
 	
 /*IE6 fix*/
