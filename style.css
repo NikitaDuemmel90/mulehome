@@ -17,7 +17,7 @@ table{border-collapse:collapse;border-spacing:0}
 hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
 input,select{vertical-align:middle}
 body,html{background-color:#FFF}
-header{background:#6f9898;padding:10px 30px;margin:auto;position:fixed;left:0;right:0;top:0;z-index:999;height:40px}
+header{background:#038A5E;padding:10px 30px;margin:auto;position:fixed;left:0;right:0;top:0;z-index:999;height:40px}
 nav{display:inline-block}
 nav ul li a{background:#fff;padding:2px 6px;font-size:14px;text-decoration:none;font-weight:bold;color:#344;border-radius:5px}
 nav ul li a:hover{color:#000}
