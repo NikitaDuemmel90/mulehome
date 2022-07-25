@@ -12,7 +12,7 @@ main {
 	position: fixed;
 	top: 100px; /* Set this to the height of the header */
 	bottom: 100px; /* Set this to the height of the footer */
-	left: 230px; 
+	left: 250px; 
 	right: 0;
 	overflow: auto; 
 	background: #fff;
@@ -60,7 +60,7 @@ footer a{
 	top: 100px; /* Set this to the height of the header */
 	bottom: 100px; /* Set this to the height of the footer */
 	left: 0; 
-	width: 230px;
+	width: 250px;
 	overflow: auto; /* Scrollbars will appear on this frame only when there's enough content to require scrolling. To disable scrollbars, change to "hidden", or use "scroll" to enable permanent scrollbars */
 	background: #E4E6E7; 		
 }
