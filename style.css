@@ -17,7 +17,7 @@ table{border-collapse:collapse;border-spacing:0}
 hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padding:0}
 input,select{vertical-align:middle}
 body,html{background-color:#FFF}
-header{background:#038A5E;padding:10px 30px;margin:auto;position:fixed;left:0;right:0;top:0;z-index:999;height:40px}
+header{background:#038A5E;padding:10px 30px;margin:auto;position:fixed;left:0;right:0;top:0;z-index:999;height:110px}
 nav{display:inline-block}
 nav ul li a{background:#fff;padding:2px 6px;font-size:14px;text-decoration:none;font-weight:bold;color:#344;border-radius:5px}
 nav ul li a:hover{color:#000}
@@ -32,13 +32,13 @@ aside > div{margin:10px auto;background:#4C5255;min-height:150px;padding:30px 10
 a#logo{vertical-align:middle;font-size:40px;color:#344;font-weight:bold;display:block;text-decoration:none;text-align:center;line-height:40px;padding:60px 5px}
 body > section{max-width:1000px;margin:auto;padding:30px 0px;border-bottom:1px solid #999;color:#333}
 #sidebarBackTop{background:#286983;color:#FFF;opacity:0.8;cursor:pointer;display:block;padding:5px}
-#sidebar a.back2Top{text-decoration:none;text-align:center;background:#344;color:#FFF;font-weight:bold;padding:5px;display:block}
+#sidebar a.back2Top{text-decoration:none;text-align:center;background:#4C5255;color:#FFF;font-weight:bold;padding:5px;display:block}
 #sidebar a.back2Top:hover{background:#456}
 #sidebarContent{width:300px;background:#E4E6E7;padding:10px}
 footer a{color:#FFF}
 #main{margin-left:320px}
-#wrapall{padding-top:60px}
-#header{max-width:1000px;overflow:hidden;height:40px}
+#wrapall{padding-top:160px}
+#header{max-width:1000px;overflow:hidden;height:100px}
 #wrapall,#header{max-width:1100px;margin:0 auto}
 #headerLeft,#headerRight{display:inline-block;vertical-align:middle}
 #headerLeft{text-align:center;width:100px}
@@ -48,12 +48,7 @@ footer a{color:#FFF}
 #menuToggle,#mobileMenuToggle{background:#FFF;cursor:pointer;display:inline-block;font-size:40px;width:40px;font-weight:bold;text-align:center;height:40px;line-height:40px;color:#344;border-radius:10px}
 #mobileMenuToggle,#mobileLogo{vertical-align:middle;display:none;font-size:30px}
 #menuToggle:hover{color:#FFF;background:#344}
-.socialButtons{float:right;padding-top:8px}
-.socialButtons a{display:inline-block;cursor:pointer;background:#0570e6;padding:2px;width:33px;text-align:center;height:20px;font-weight:bold;color:#FFF;text-decoration:none;line-height:20px;font-size:20px;border-radius:5px;vertical-align:middle}
-.socialButtons a.linkedin{background:#24568e}
-.socialButtons a.youtube{background:#c00}
-.socialButtons a svg{width:16px;height:16px;fill:#FFF}
-.stick #sidebarContent{position:fixed;z-index:900;bottom:0px}
+.ubtLogo{float:right;padding-top:0px}
 #stick-here{background:red}
 .sidebarToggle #sidebar{display:none}
 .sidebarToggle #main{margin-left:0}
@@ -75,7 +70,7 @@ aside > div{min-height:20px;padding:10px}
 nav ul li a{display:block;background:transparent;color:#FFF;text-align:center;font-size:16px;padding:3px 29px;line-height:25px}
 .showMobileMenu #mobileMenuToggle{background:#344;color:#FFF}
 nav ul li{display:block;margin:0}
-.socialButtons{display:none}
+.ubtLogo{display:none}
 header{padding:3px 10px}
 #page{padding: 20px 10px}
 #wrapall{padding-top:46px}
