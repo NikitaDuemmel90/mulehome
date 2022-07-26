@@ -93,6 +93,15 @@ nav ul a {
 nav ul a:hover {
 	color: darkgreen;
 }
+
+a {
+	color: #038A5E;
+	/*text-decoration: none;*/
+}	
+
+a:hover {
+	color: darkgreen;
+}
 	
 /*IE6 fix*/
 * html body{
