@@ -7,13 +7,15 @@
 	</head>
 	
 	<body>	
+		<p><br>
 		<h1>Getting started</h1>		
 		<p>This guide will explain everything you need to start programming with MuLE.	
-		<h3 id="contents"><li>Contents</h3>
+		<h3 id="contents">Contents</h3>
 		<ol>
 			<li><a href="#java">Java</a></li>
 			<li><a href="#eclipse">Prepackaged Eclipse archives</a></li>
 			<li><a href="#eclipse_first_steps">First steps in Eclipse</a></li>
+			<li><a href="#eclipse_mule_perspective">MuLE perspective</a></li>
 			<li><a href="#mule_install">Installing MuLE on a clean Eclipse</a></li>
 		</ol>
 		
@@ -24,6 +26,7 @@
 				<br>If you are not sure if Java is already installed and which version you have, you can enter the command <b>java -version</b> in you command line interface, e.g. <b>cmd.exe</b> on Windows.
 				<br><img src="../images/java_version.png" alt="Using java -version to check your Vava version in the CLI.">
 				<br>You can get the current version of Java at <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">https://www.oracle.com/java/technologies/downloads/</a>
+				<p><a href="#contents">Back to the table of contents</a>
 			</li>
 			
 			<p><br>
@@ -37,14 +40,73 @@
 				</ul>
 				Simply unpack the respective archive in any folder and you can skip to the next step.
 				<p>However, if you want to download and configure your own Eclipse, instead of downloading any of the above erchives, you need to follow the <a href="#mule_install">installation instructions</a>.
+				<p><a href="#contents">Back to the table of contents</a>
 			</li>
 			
 			<p><br>
 			<h3 id="eclipse_first_steps"><li>First steps in Eclipse</h3>
+				<p>You have downloaded an Eclipse archive and extracted it in a folder of your choice.
+				<ol>
+					<li>
+						Start Eclipse by running the executable (<b>eclipse.exe</b> on Windows)
+					</li>
+					<p>
+					<li>
+						Once Eclipse loads, you will see the following window:
+						<br><img src="../images/eclipse_start_workspace.png" alt="Setting the Eclipse workspace path.">
+						<br>Here you are asked to set a path to you workspace, i.e. a folder where all of your project folders and files will be stored.
+						<br>Enter a path of your choice and press <b>Launch</b>.
+					</li>
+					<p>
+					<li>
+						You will be greeted by the following window:
+						<br><img src="../images/eclipse_start_window.png" alt="Eclipse greeting window.">
+						<br>Simply press the <b>Hide</b> button in the upper right corner and you will get to your workspace.
+					</li>
+					<p>
+					<li>
+						We are now in the Java perspective, which look like that:
+						<br><img src="../images/eclipse_start_java.png" alt="Java perspective.">
+						<br>Since we want to program using MuLE, we have to click on the <b>MuLE Project</b> option in the <b>Package Explorer</b>. 
+						<br>Once we do that, a new window will open prompting us to enter the project name.
+						<br>Let us enter <b>MyFirstProject</b> as a name and press <b>Finish</b>.
+						<br>Keep in mind, some names will not be accepted, e.g. you may not use empty spaces within a name or use most special characters.
+						<br>If you now browse to your workspace folder in your system explorer, you will find your new project folder there.
+						<br>You may also have noticed, that the main window in the background has changed slightly.
+					</li>
+					<p>
+					<li>
+						Creating a MuLE project has automatically forced us into the MuLE Perspective, we can see fewer button compared to the Java perspective.
+						<br><img src="../images/eclipse_start_mule_empty.png" alt="MulE perspective, empty project.">
+						<br>As we can see, the project is empty, we have to create a MuLE file first.
+						<br>To do this, right click on the <b>src</b> folder in your project and select <b>New &rarr; File &rarr; Other &rarr; MuLE &rarr; MuLE File</b>, enter the file name, e.g. <b>HW</b>, and press <b>Finish</b>.
+						<br>Keep in mind, some names will not be accepted, e.g. you may not use empty spaces within a name or use most special characters.
+						<br>Alternatively, you can click on <b>File &rarr; New &rarr; MuLE File</b> and enter the target src folder as well as a name.
+					</li>
+					<p>
+					<li>
+						As tradition demands, we will start by writing a <b>Hello, world!</b> program.
+						<br>To do this, simply type <b>IO.writeString("Hello, world!")</b> somewhere between the keywords <b>main</b> and <b>endmain</b>.
+						<br>Once you are done typing, save your file and press the green button which looks like a PLAY button.
+						<br>You should see a <b>Hello, world!</b> output in the console view.
+						<br><img src="../images/eclipse_start_mule_hw.png" alt="Hello, world!">
+						<br>That's it, we have written our first MuLE program!
+						<br>You can now start with the programming course, everything you need to know will be explained there step-by-step.
+						<br>A structured overview over specific language constructs is given in the corresponding sections of this website.
+					</li>
+				</ol>
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			
+			<p><br>
+			<h3 id="mule_install"><li>MuLE perspective</h3>
+				
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
 			
 			<p><br>
 			<h3 id="mule_install"><li>Installing MuLE on a clean Eclipse</h3>
-				<p>Follow these steps ONLY if you have chose not to use one of the prepackaged Eclipse archives. 
+				<p>Follow these steps <b>ONLY</b> if you have chosen not to use one of the <a href="#eclipse">prepackaged Eclipse archives</a>. 
 				<br><b>ATTENTION:</b> the MuLE plugins make changes to the Eclipse user interface. You are advised to use a separate Eclipse installation for MuLE.
 				<ol>
 					<li>Download an Eclipse package (Eclipse IDE for Java Developers will suffice): <a href="https://www.eclipse.org/downloads/packages/" target="_blank">https://www.eclipse.org/downloads/packages/</a></li>
@@ -52,7 +114,9 @@
 					<li>PLACEHOLDER</li>
 					<li>PLACEHOLDER</li>
 				</ol>
+				<p><a href="#contents">Back to the table of contents</a>
 			</li>
 		</ol>
+		<p><br>
 	</body>
 </html>
