@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/style.css">	
+	</head>
+	
+	<body>	
+		<p><br>
+		<h1>MuLE Eclipse perspective</h1>		
+		<p>This page explains the user interface as defined by the MuLE Eclipse perspective.	
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#perspective">What are Eclipse views and perspectives?</a></li>
+			<li><a href="#mule">Eclipse MuLE perspective</a></li>
+			<li><a href="#custom">Customizing perspective</a></li>
+		</ol>
+		
+		<ol>
+			<p><br>
+			<h3 id="perspective"><li>What are Eclipse views and perspectives?</h3>
+				<p>Let us first explain the concepts of views and perspectives.
+				<br>A <b>view</b> is an element of the user interface with a specific task. For example, the <b>editor</b> view allows us to write and edit our code while the <b>project explorer</b> view allows us to browse the folders and files of the project.  
+				<br>A <b>perspective</b> is a collection of views relevant in a specific context, e.g. the MuLE perspective has a selection of views which we deemed most necessary. Furthermore, views are ordered in a specific layout within a perspective.
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="mule"><li>Eclipse MuLE perspective</h3>
+				<p>The MuLE perspective attempts to simplify the Eclipse user interface by hiding many controls and options, which are not necessary for beginner programmers.
+				<br>However, these changes are propagated to other perspectives to a certain degree, so we advice you to use a separate Eclipse for programming with MuLE.
+				<p>Let us take a look at the MuLE perspective:
+				<br><img src="../images/mule_perspective.png" alt="Views of the MuLE Perspective.">
+				<ol>
+					<p><li>
+						This sector contains various option menus.
+						<br><b>File</b> allows you to create new files, folder, projects, etc. Furthermore, you can modify file properties and import or export projects here.
+						<br><b>Edit</b> contains your usual undo/redo/cut/copy/paste options.
+						<br><b>Run</b> contains execution options such as run or debug.
+						<br><b>Help</b> allows you to open this very website directly from Eclipse, check for updates or modify preferences of Eclipse.
+					</li>
+					<p><li>
+						This sector contains quick access buttons to specific functions, such as <b>new</b>, <b>save</b>, <b>run</b> and <b>debug</b> buttons.
+					</li>
+					<p><li>
+						You can search for Eclipse specific commands by clicking on the magnifying glass and manage perspectives here.
+						<br>As we can see, we have Java and MuLE perspectives open right now, with MuLE being the active perspective.
+						<br>By default, you will only see icons without any text here, to display the names of the perspectives as is shown in the screenshot, you have to right click on any perspective and click on <b>Show Text</b>.
+						<br>You can open and close perspectives, switch between them and reset them here.
+					</li>
+					<p><li>
+						This is your project explorer, you can browse your projects here, open included files, create or delete files, etc.
+					</li>
+					<p><li>
+						This is the outline tree view, it gives us a structured view of our program, which can be helpful when we have big programs with many type declarations and operations.
+						<br> You can navigate to specific program elements by clicking on nodes in this tree. You can also unwrap imported libraries and declared types here.
+					</li>
+					<p><li>
+						This is your source code editor where you write and edit the code of your programs.
+						<br>As you can see, we can have several files open at the same time.
+						<br>The editor supports syntax highlighting, keywords are magenta, types are orange, string literals are blue, comments are green, everything else is black.
+						<br>You can auto format you code by pressing <b>Ctrl+Shift+F</b>.
+						<br>You can invoke content assist function by pressing <b>Ctrl+Space</b>.
+					</li>
+					<p><li>
+						This is the console view, any standard input/output functionality, e.g. <b>IO.writeString("Hello, world!")</b>, is performed here.
+						<br>Runtime error messages are also displayed here.
+					</li>
+					<p><li>
+						An finally we have a sector with three views which are used in the context of debugging, which is actually displayed in the screenshot.
+						<br>To start debugging, place a breakpoint in the editor view by double clicking on a line number. Then execute the program using the debug button which lookc like a green bug.
+						<br>Once the program reaches the line with a breakpoint, its execution halts and you can view the current values of the variables, execute lines step-by-step, or terminate the program altogether.
+						<br>The <b>Variables</b> view allows you to inspect the current values of the variables.
+						<br>The <b>Breakpoints</b> view allows you to manage your breakpoints, e.g. navigate between them, deactivate or delete them.
+						<br>The <b>Debug</b> view shows you currently running programs and allows you to terminate them. Furthermore, you can inspect the state of operations on the call stack here.
+					</li>
+				</ol>
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="custom"><li>Customizing and resetting perspective</h3>
+				<p>You can rearrange, resize and minimize views, for example by dragging them to another position if you don't like the current layout.
+				<br>In the screenshot below we have minized the views related to debugging and moved the outline tree to a different position.
+				<br>If you want to reset the perspective to its preconfigured state, simply right click on the MuLE perspective and select <b>Reset</b>.
+				<br><img src="../images/mule_perspective_reorg.png" alt="Rearranged views of the MuLE Perspective.">
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+		</ol>
+		<p><br>
+	</body>
+</html>
