@@ -3,10 +3,87 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/style.css">		
+		<link rel="stylesheet" href="../css/style.css">	
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1>Troubleshooting</h1>		
+		<p>Life would be so much easier if everything would just work as expected, sadly it is often not quite the case.
+		<br>Here we will attempt to gather (technical) problems and their solutions.
+		<br>If you encounter a problem which is not listed here, please contact the author of this website (link in the bottom right corner).
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#compilation_error">Compile time errors</a></li>
+			<li><a href="#runtime_error">Runtime errors</a></li>
+			<li><a href="#endless_loops">Endless loops</a></li>
+			<li><a href="#terminate_all">Terminate multiple running programms</a></li>
+		</ol>
+		
+		<ol>			
+			<p><br>
+			<h3 id="compilation_error"><li>Compile time errors</h3>
+				<p>The most common and the most easy-to-fix errors are compile time errors.
+				<br>If our written code breaks the rules defined by the language, such as writing a keyword wrongly or referring to non-existing variable, the code cannot be compiled and the offending piece of code is marked.
+				<br>This means we cannot execute our program until we fix the error.
+				<p>In the example below we wanted to store <b>apple</b> as our <b>item</b>, however <b>apple</b> is marked red and the corresponding error message is that we cannot resolve reference to a NamedElement called <b>apple</b>.
+				<br>The problem is that we refer to a non-existing element, hence the error message. Our intention was most likely to just store a string value in the variable <b>item</b>.
+				<br>We can either write <b>"apple"</b>, i.e. as a string, or introduce a string variable called <b>apple</b> to fix this error.
+				<br>As we can see, quick fixes are offered for most of the compile time errors, however in this specific case, none of the offered quickfixes would help, meaning that you need to use this feature carefully.
+				<br><img src="../images/trouble_compile_error.png" alt="Compile time error.">
+				
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="runtime_error"><li>Runtime errors</h3>
+				<p>Another type or errors are those caused at runtime, these errors are a little bit harder to fix.
+				<br>Unlike compile time errors, the program can be compiled and executed, but crashes during the execution.
+				<br>The corresponding error message is displayed in the console, you have to read the error message in order to understand what went wrong.
+				<br>Debugging the program, i.e. setting a breakpoint and executing the program step-by-step, is often a good start when trying to fix such errors.
+				<p>In our example below, the error message is <b>Exception in thread "main" java.lang.IndexOutOfBoundsException: Index 3 out of bounds for length 3</b>.
+				<br>That means that:
+				<ul>
+					<li>it happened in the main procedure</li>
+					<li>we have tried to access an entry in a list which is not actually in this list (<b>IndexOutOfBoundsException</b>, here we can see clearly that MuLE runs on Java)</li>
+					<li>the list length is 3, i.e. it has three entries</li>
+					<li>the erroneous index is also 3, since the first entry has the index 0, we have attempted to access the non-existing fourth element, hence the error.</li>
+				</ul>
+				<br>We can also see, that the program was executed partly, i.e. until the erroneous access.
+				<br><img src="../images/trouble_runtime_error.png" alt="Runtime error.">
+				
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="endless_loops"><li>Endless loops</h3>
+				<p>Sometimes we forget to correctly implement the termination of a loop, which will result in an endless loop.
+				<br>In the screenshot below we can see such an example, our programm is running although it seems as if nothing happens.
+				<br>The value of our variable <b>i</b> will be forver 0, meaning that the programm will run forver until terminated by other means.
+				<br>We can also see in the debug view, that our program is running.
+				<br>To terminate the program, we have to press the red stop button in the console view.
+				<br>If we don't terminate such programms and keep executing new programs instead, we will put a strain on the ressources of our machine.
+				<br><img src="../images/trouble_endless_loop.png" alt="Terminating running programs.">
+				
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="terminate_all"><li>Terminate multiple running programms</h3>
+				<p>However, sometimes we are pretty sure that we are right and the program is wrong and it should run so we keep pressing that green button.
+				<br>Sadly the program still won't do as expected and instead the fans of our computer start to get louder and our machine starts to get slower.
+				<br>We have started several programs, all of them doing nothing except for eating our ressources.
+				<br>As we can see in the screenshot below, we have five programs running, we can select each of them and terminate them one by one as described previously.
+				<br>Or we can right click one of them and select <b>Terminate/Disconnect All</b>.
+				<br><img src="../images/trouble_terminate_all.png" alt="Terminating running programs.">
+				
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+		</ol>
+		<p><br>
 	</body>
 </html>
