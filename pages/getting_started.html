@@ -15,7 +15,7 @@
 			<li><a href="#java">Java</a></li>
 			<li><a href="#eclipse">Prepackaged Eclipse archives</a></li>
 			<li><a href="#eclipse_first_steps">First steps in Eclipse</a></li>
-			<!--<li><a href="#eclipse_mule_perspective">MuLE perspective</a></li>-->
+			<li><a href="#debugging">Using the debugger</a></li>
 			<li><a href="#mule_install">Installing MuLE on a clean Eclipse</a></li>
 		</ol>
 		
@@ -97,6 +97,32 @@
 						<br>A structured overview over specific language constructs is given in the corresponding sections of this website.
 					</li>
 				</ol>
+				<p><a href="#contents">Back to the table of contents</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="debugging"><li>Using the debugger</h3>
+				<p>Sooner or later you will stare at your code not understanding why it doesn't work, or why it does.
+				<br>At this point, it would be very helpful, if you could execute your program step-by-step and monitor the state of the variables.
+				<br>Thankfully, there is a tool called debugger, which is exactly meant to do just that.
+				<br>In the screenshot below you can see a program in the middle of debugging process.
+				<ol>
+					<li>To start debugging, you first need to place at leat one breakpoint by double clicking on a line number.
+						<br>Be aware, that you can not place a breakpoint just anywhere, however statements such as operation calls or assignments should du just fine.
+						<br>You can manage your breakpoints in the <b>Breakpoints</b> view.
+					</li>
+					<li>Now that we have a breakpoint, we can start debugging by clicking on the <b>Debug</b> button.
+						<br>This will execute the program normally until a breakpoint is reached.
+						<br>At this point the execution is halted and we can inspect our variables in the <b>Variables</b> view.
+					</li>
+					<li>To execute our program step-by-step we can press the <b>Step over</b> in the debug controls panel to the left of the <b>Debug</b> button.						
+					</li>
+					<li>Using the debug controls we can also run the program until the next breakpoint is reached, in our example it would be the same breakpoint in the next iteration of the loop.
+						<br>Or we can terminate the debugging process if we have found out what we need and don't want to fully execute our program.
+					</li>
+				</ol>
+				<br><img src="../images/eclipse_debugging.png" alt="Using debugger.">
 				<p><a href="#contents">Back to the table of contents</a>
 			</li>
 			<hr>
