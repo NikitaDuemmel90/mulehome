@@ -8,11 +8,12 @@
 	
 	<body>	
 		<p><br>
-		<h1 id="top">Getting started</h1>		
-		<p>This guide will explain everything you need to start programming with MuLE.	
+		<h1 id="top">Chapter 1: data types, variables, input and output</h1>		
+		<p>In this chapter we will talk a bit about algorithms and write our first simple programs with MuLE.
 		<h3 id="contents">Contents</h3>
 		<ol>
 			<li><a href="#algorithms">Algorithms</a></li>
+			<li><a href="#hwprogram">A "Hello, World!" Program</a></li>
 			<li><a href="#template">Template</a></li>
 		</ol>
 		
@@ -49,7 +50,8 @@
 				</ol>
 				
 				<p>As we can see, we have added a couple of weird sounding steps, especially when it comes to go to instructions.
-				<br>We have also removed the ambiguity from the previous algorithm.
+				<br>The go to instructions allow us to skip some steps or repeat previous steps depending on a specific condition.
+				<br>This way we have removed the ambiguity from the previous algorithm.
 				<br>Of course, these steps are still heavily abstracted and we may need to specify them further, but we won't go there yet.
 				<br>What we need to know now, machines cannot think the way humans do, unlike machines we are capable of abstract thinking.
 				<br>When programming a machine however, we have to define every step at lower levels of abstractions.
@@ -64,6 +66,37 @@
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
+			
+			<p><br>
+			<h3 id="hwprogram"><li>A "Hello, world!" program</h3>
+				<p>If you have followed the Getting Started guide, you have propably already written and executed you first "Hello, World!" program.
+				<br>Nevertheless, we will do it again, however this time we will talk a bit more about the specific elements of our program.
+				<br><img src="../images/ch1_hw.png" alt="">
+				
+				<p>There is quite a lot of information in this example, so let us try to summarize it:
+				<ol>
+					<li>A program is written in a file, its name must be equal to the file name.</li>
+					<li>We can import libraries, which are contained in their own files, using their names in an <b>import</b> instruction.</li>
+					<li>Named elements, e.g. a program or a variable, can be referred to by theit names. In this example we first refer to the <b>IO</b> library to import it, then again to access the <b>writeString</b> operation, which we also reference by its own name.</li>
+					<li>The main procedure is the entry point in our program, i.e. the first statement here is the first one to be executed.</li>
+					<li>A statement is a single executable instruction with a specific task, e.g. the <b>IO.writeString("Hello, world!")</b> invokes the imported operation to print a string on the console. 
+					<br>Other statements can be used to declare variables, change their values or manipulate to flow of our program depending on specific conditions.
+					</li>
+					<li>Statements can be complemented by expressions, which in case of MuLE cannot be used outside of statements. An expression is evaluated and yields a value.
+					<br>In our case <b>"Hello, World!"</b> is an expression which is used to pass a string value to the <b>writeString</b> operation. Another example of an expression is <b>2 + 3</b> which yields 5.
+					</li>
+					<li>Values represent data. They also have a data type, which is used to validate the correctness of our program.
+					<br>In our example we invoke an operation which expects a string value, meaning that we are not allowed to pass a value with a different data type, e.g. an integer.
+					<br>So if we want to print a <b>5</b> using <b>writeString</b>, we have to pass it as a string value, i.e. <b>"5"</b>.
+					<br>Otherwise our program will not compile.
+					</li>
+					<li>We can define our own operations and types outside of the main procedure, which we will do it in subsequent chapters.</li>
+				</ol>
+				<p>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
 			<p><br>
 			<h3 id="template"><li>Template</h3>
 				<p>
