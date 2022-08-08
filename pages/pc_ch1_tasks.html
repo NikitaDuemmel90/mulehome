@@ -3,10 +3,353 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/style.css">		
+		<link rel="stylesheet" href="../css/style.css">	
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution"
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution"
+				}
+			}
+		</script>	
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 1: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#swap">Swap Variable Values</a></li>
+			<li><a href="#speeder">Speeder</a></li>
+			<li><a href="#userio">User Interaction</a></li>
+			<li><a href="#circle">Circle Area</a></li>
+			<li><a href="#house">House</a></li>
+		</ol>
+		
+		<ol>
+						
+			<p><br>
+			<h3 id="swap"><li>Swap Variable Values</h3>
+				<p>Your task is to implement an algorithm which swaps the value of two variables.
+				<br>Do not just change the values in the code.
+				<br>You can implement this algorithm by using a temporary variable.
+				<br>Also, you can do it without a third variable using arithmetic operators.
+				<p>If initially a is 42 and b is 5, after the execution a should be 5 and b should be 42 
+				<p>
+				<textarea rows="26" cols="150" readonly>
+program swapVariables
+import IO
+ 
+main
+	variable a : integer
+	variable b : integer	
+	a := 42
+	b := 5
+	
+	IO.writeString("Value of a is: ")
+	IO.writeInteger(a)
+	IO.writeString(", value of b is: ")
+	IO.writeInteger(b)
+	IO.writeLine()
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+	
+	IO.writeString("Value of a is: ")
+	IO.writeInteger(a)
+	IO.writeString(", value of b is: ")
+	IO.writeInteger(b)
+	IO.writeLine()
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_1" rows="33" cols="150" readonly style="display:none;">
+program swapVariables
+import IO
+ 
+main
+	variable a : integer
+	variable b : integer	
+	a := 42
+	b := 5
+	
+	IO.writeString("Value of a is: ")
+	IO.writeInteger(a)
+	IO.writeString(", value of b is: ")
+	IO.writeInteger(b)
+	IO.writeLine()
+	
+	// SOLUTION USING A TEMP VARIABLE
+	variable c : integer
+	c := a
+	a := b
+	b := c
+	
+	// ALTERNATIVE SOLUTION WITHOUT THE VARIABLE
+	// a := a + b
+	// b := a - b
+	// a := a - b
+	
+	IO.writeString("Value of a is: ")
+	IO.writeInteger(a)
+	IO.writeString(", value of b is: ")
+	IO.writeInteger(b)
+	IO.writeLine()
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+						
+			<p><br>
+			<h3 id="speeder"><li>Speeder</h3>
+				<p>This is a physics textbook excercise.
+				<p>At the place of a traffic accident, the police determines that the braking distance of a car is 19.0 meters.
+				<br>The coefficient of friction of the tire material on the road surface is μ = 0,75.
+				<p>What was the speed of the driver?
+				<p>The required formula:
+				<br><img src="../images/ch1_speeder.png" alt="">
+				<p>
+				<textarea rows="23" cols="150" readonly>
+program speeder
+import IO
+import Strings
+import Mathematics
+/*
+ * Our formula: 1/2*(m*v^2) = mu*m*g*s
+ * We need v (km/h), 1m/s = 3,6km/h.
+ * Square root of x = x exp 0.5
+ */
+main
+	variable s : rational
+	variable mu : rational
+	variable g : rational
+	s  := 19.0 
+	mu := 0.75
+	g  := 9.81 
+	
+	variable v : rational	 
+	//IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>
+				
+				<p>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_2" rows="19" cols="150" readonly style="display:none;">
+program speeder
+import IO
+import Strings
+import Mathematics 
+
+main
+	variable s : rational
+	variable mu : rational
+	variable g : rational
+	s  := 19.0 
+	mu := 0.75
+	g  := 9.81 
+	
+	variable v : rational	
+	v := (2 * s * g * mu) exp 0.5 // m/s	
+	v := v * 3.6 // km/h	
+	IO.writeString("The speed of the driver was " & Strings.integerToString(Mathematics.round(v)) & "km/h.\n") 
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+						
+			<p><br>
+			<h3 id="userio"><li>User Interaction</h3>
+				<p>Your task is to implement a simple user interaction.
+				<br>The machine should first ask the user what is his or her name.
+				<br>Then, the machine should greet the user and ask the users age.
+				<br>Finally, the machine should compute the birth year of the user. 
+				<br>Just use the current year as a number, you cannot query the current date from your machine using MuLE.
+				<p>The entire interaction could look like this:
+				<p>
+				<textarea rows="4" cols="150" readonly>
+Hello, what is your name? Nikita
+Nice to meet you Nikita, how old are you? 32
+So you were born in 1990
+				</textarea>
+				<p>
+				<textarea rows="14" cols="150" readonly>
+program userInteraction
+import IO
+
+main
+	IO.writeString("Hello, what is your name? ")
+	variable name : string
+	name := IO.readString()
+	IO.writeString("Nice to meet you " & name & ", how old are you? ")
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>
+				
+				<p>
+				<button id="ch1_btn_3" onclick="toggleTextArea('ch1_sol_3', 'ch1_btn_3')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_3" rows="15" cols="150" readonly style="display:none;">
+program userInteraction
+import IO
+import Strings 
+
+main
+	IO.writeString("Hello, what is your name? ")
+	variable name : string
+	name := IO.readString()
+	IO.writeString("Nice to meet you " & name & ", how old are you? ")
+	
+	variable age : integer
+	age := IO.readInteger()
+	IO.writeString("So you were born in " & Strings.integerToString(2022 - age))
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+						
+			<p><br>
+			<h3 id="circle"><li>Circle Area</h3>
+				<p>Your task is to calculate the area of a circle: <i>A = &pi; * r<sup>2</sup></i>
+				<p>Start by declaring the necessary variables: <b>radius</b>, <b>pi</b> and <b>area</b>.
+				<p>Set <b>radius</b> to 2 and <b>pi</b> top 3.14 and compute and print the area value.
+				<br>Using these values, the result should be 12.56.
+				<textarea rows="12" cols="150" readonly>
+program circleArea
+import IO
+import Strings 
+
+main
+	// TODO: declare variables radius, pi and area
+		
+	// TODO: set initial values for radius (2) and pi (3.14)
+	
+	// TODO: compute the area and print the result
+endmain
+				</textarea>
+				
+				<p>
+				<button id="ch1_btn_4" onclick="toggleTextArea('ch1_sol_4', 'ch1_btn_4')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_4" rows="18" cols="150" readonly style="display:none;">
+program circleArea
+import IO
+import Strings 
+import Mathematics 
+
+main
+	variable radius : integer	
+	variable pi : rational
+	variable area : rational
+	
+	radius := 2
+	pi := 3.14
+	area := radius exp 2 * pi
+	
+	IO.writeString("The area of the circle is " & Strings.rationalToString(area))
+endmain
+
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+						
+			<p><br>
+			<h3 id="house"><li>House</h3>
+				<p>This is basically a kids game.
+				<br>Your task is to draw a house using the Turtle library in one go, i.e. without jumping to other locations while drawing.
+				<br><img src="../images/ch1_house.png" alt="">
+				<p>The variable <b>l_a</b> represents the length of the horizontal and vertical lines.
+				<br><b>l_b</b> is the length of the diagonal lines in the house, you have to compute it, for example by using Pythagoras.
+				<br><b>l_c</b> is the length of the diagonal lines on the roof, you also have to compute it.
+				<p>
+				<textarea rows="18" cols="150" readonly>
+program house
+import IO
+import Turtle 
+import Mathematics 
+
+main 
+	Turtle.setPosition(200, 200)
+	Turtle.setDirection(90)
+		
+	variable l_a : integer
+	variable l_b : integer
+	variable l_c : integer
+	l_a := 100
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF SOLUTION
+endmain
+				</textarea>
+				
+				<p>
+				<button id="ch1_btn_5" onclick="toggleTextArea('ch1_sol_5', 'ch1_btn_5')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_5" rows="34" cols="150" readonly style="display:none;">
+program house
+import IO
+import Turtle 
+import Mathematics 
+
+main 
+	Turtle.setPosition(200, 200)
+	Turtle.setDirection(90)
+		
+	variable l_a : integer
+	variable l_b : integer
+	variable l_c : integer
+	l_a := 100
+	l_b := Mathematics.round(((l_a exp 2) * 2) exp 0.5)
+	l_c := Mathematics.round(l_b / 2)
+	
+	Turtle.left(45)
+	Turtle.forward(l_b)
+	Turtle.right(135)
+	Turtle.forward(l_a)
+	Turtle.right(135)
+	Turtle.forward(l_b)
+	Turtle.right(135)
+	Turtle.forward(l_a)
+	Turtle.left(135)
+	Turtle.forward(l_c)
+	Turtle.left(90)
+	Turtle.forward(l_c)
+	Turtle.left(45)
+	Turtle.forward(l_a)
+	Turtle.left(90)
+	Turtle.forward(l_a)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>			
+			
+		<p><br>
 	</body>
 </html>
