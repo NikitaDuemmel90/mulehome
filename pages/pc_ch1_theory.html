@@ -14,7 +14,13 @@
 		<ol>
 			<li><a href="#algorithms">Algorithms</a></li>
 			<li><a href="#hwprogram">A "Hello, World!" Program</a></li>
-			<li><a href="#template">Template</a></li>
+			<li><a href="#datatypes">Data and Datatypes</a></li>
+			<li><a href="#variables">Variables</a></li>
+			<li><a href="#input">User Input</a></li>
+			<li><a href="#operators">Arithmetic Operators</a></li>
+			<li><a href="#concat">String Concatenation</a></li>
+			<li><a href="#typeConversion">Type Conversion</a></li>
+			<li><a href="#turtle">Turtle</a></li>
 		</ol>
 		
 		<ol>
@@ -104,9 +110,218 @@
 			<hr>
 			
 			<p><br>
-			<h3 id="template"><li>Template</h3>
+			<h3 id="datatypes"><li>Data and Datatypes</h3>
+				<p>The word informatics is an amalgam of two words: infortmaion and mathematics. Or in other words, informatics is built around data and what we can do with it.
+				<br>Thus the core idea of any program is usually to handle chunks of <b>data</b>, and in order to know what to do, each piece of information has a <b>data type</b>.
+				<br>Let's take a look at the following program, feel free to copy and paste the code into your Eclipse and run it.
 				<p>
-				<br><img src="../images/wip.png" alt="">
+				<textarea rows="10" cols="150" readonly>
+program dataAndTypes
+import IO
+
+main
+	IO.writeString("Hi")		IO.writeLine()
+	IO.writeInteger(42)		IO.writeLine()
+	IO.writeRational(3.14)		IO.writeLine()
+	IO.writeBoolean(true)		IO.writeLine()
+endmain
+				</textarea>
+				<p>As we can see, we print different values on the console and we need different operations for different types of values.
+				<br>We can not print an integer using the <b>writeString</b> operation since it expects a string value as a parameter.
+				
+				<p>MuLE supports four basic data types:
+				<ul>
+					<li><b>string</b> - represents strings of characters, such as <i>"Hi"</i> or <i>"Hello, world!"</i>.</li>
+					<li><b>integer</b> - are our basic numbers, e.g. <i>42</i> or <i>5</i>.</li>
+					<li><b>rational</b> - represents the floating point numbers, for example <i>3.14</i> or <i>5.5555</i>.</li>
+					<li><b>boolean</b> - for truth values which are <i>true</i> and <i>false</i>.</li>
+				</ul>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="variables"><li>Variables</h3>
+				<p>The concept of variables should sound familiar, pretty sure most of us have heard it in the mathematics class.
+				<br>In the mathematics variables represent placeholders for values, e.g. in <i>f(x) = mx + t</i> we have three variables, with <i>x</i> also acting as a parameter.
+				<br>In most programming languages, variables act as a named container for values, i.e. we can store our data there.
+				<br>The image below gives an extremely simplified explanation of variables in the memory of a program, i.e. we have a container with the name <b>x</b> where we can store integer values. The currently stored value is 42.
+				<br><img src="../images/ch1_var.png" alt="">
+				<p>The following code demonstrates the basic usage of variables, go ahead and try it out in your Eclipse.
+				<p>
+				<textarea rows="21" cols="150" readonly>
+program variables
+import IO
+
+main
+	variable str : string
+	str := "Hello, world!"
+	IO.writeString("string = ")		IO.writeString(str)		IO.writeLine()
+	
+	variable intgr : integer
+	intgr := 42
+	IO.writeString("integer = ")		IO.writeInteger(intgr)		IO.writeLine()
+	
+	variable ratnl : rational
+	ratnl := 3.14
+	IO.writeString("rational = ")		IO.writeRational(ratnl)		IO.writeLine()
+	
+	variable truthVal : boolean
+	truthVal := true
+	IO.writeString("truth value = ")	IO.writeBoolean(truthVal)	IO.writeLine()
+endmain
+				</textarea>
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="input"><li>User Input</h3>
+				<p>When talking about our ATM algorithm at the beginning of this chapter, we have mentioned steps in which user had to enter her PIN or the amount of money.
+				<br>This values are specific to each user, meaning that there should be a possibility for the user to enter this information and pass it to the machine.
+				<br>To achieve this we use the <b>IO</b> library again, which we have already used to print values on the console.
+				<br>This time we have to use one of the read operations, e.g. <b>readString</b> if we want to read a string value, which we will have to enter from the console view.
+				<br>Please notice, that the read operation does not accept any parameters, unlike the write operations.
+				<br>However it yields us a value, which we promptly store in a variable. We can now use this variable to access the data which we have entered earlier, for example to print it on the console.
+				<p>
+				<textarea rows="13" cols="150" readonly>
+program inputOutput
+import IO
+
+main
+	variable name : string
+	
+	IO.writeString("Please enter your name: ")
+	name := IO.readString()
+	
+	IO.writeString("Hello ")
+	IO.writeString(name)
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="operators"><li>Arithmetic Operators</h3>
+				<p>Arithmetic operators allow us to parforms basic arithmetic operations on numeric values, i.e. values of types <b>integer</b> and <b>rational</b>.
+				<ul>
+					<li><b>+</b> : addition</li>
+					<li><b>-</b> : subtraction</li>
+					<li><b>*</b> : multiplication</li>
+					<li><b>/</b> : rational division</li>
+					<li><b>div</b> : integer division</li>
+					<li><b>mod</b> : modulo</li>
+					<li><b>exp</b> : exponentiation</li>
+				</ul>
+				<p>
+				<textarea rows="13" cols="150" readonly>
+program arithmeticOperators
+import IO
+
+main
+	IO.writeString("5 + 2 = ")	IO.writeRational(5 + 2)		IO.writeLine()
+	IO.writeString("5 - 2 = ")	IO.writeRational(5 - 2) 	IO.writeLine()
+	IO.writeString("5 * 2 = ")	IO.writeRational(5 * 2) 	IO.writeLine()
+	IO.writeString("5 / 2 = ")	IO.writeRational(5.0 / 2.0) 	IO.writeLine()
+	IO.writeString("5 div 2 = ")	IO.writeRational(5 div 2) 	IO.writeLine()
+	IO.writeString("5 mod 2 = ")	IO.writeRational(5 mod 2) 	IO.writeLine()
+	IO.writeString("5 exp 2 = ")	IO.writeRational(5 exp 2) 	IO.writeLine()
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="concat"><li>String Concatenation</h3>
+				<p>Similar to our arithmetic operations, we can apply a specific concatenation operator <b>& </b> on two strings to create a single string from them.
+				<p>
+				<textarea rows="17" cols="150" readonly>
+program stringConcatenation
+import IO
+
+main	
+	variable name : string
+		
+	IO.writeString("Please enter your name: ")
+	name := IO.readString()
+	
+	// No longer:
+	// IO.writeString("Hello ")
+	// IO.writeString(name)
+	
+	// Instead we can write:	
+	IO.writeString("Hello " & name)
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="typeConversion"><li>Type Conversion</h3>
+				<p>Sometimes we have the right data but with the wrong data type.
+				<br>For example, we want to concatenate a number to a string value.
+				<br>We can't simply do that using the concatenation operator since it expects two string values.
+				<br>So first, we need to transform our number into a string.
+				<br>We can do this by importing the <b>Strings</b> library and using some of its operations, for example <b>integerToString</b>.
+				<p>
+				<textarea rows="20" cols="150" readonly>
+program typeConversion
+import IO
+import Strings	// import the Strings library
+
+main
+	variable item : string
+	variable price : rational
+	variable number : integer
+	
+	item := "apple"
+	price := 0.5
+	number := 3
+	
+	variable totalPrice : rational
+	totalPrice := price * number
+	
+	IO.writeString("One " & item & " costs " & Strings.rationalToString(price) & "\n") // use Strings operations to convert non string data
+	IO.writeString(Strings.integerToString(number) & " " & item & "(s) cost(s) " & Strings.rationalToString(totalPrice) & "\n") // into strings
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="turtle"><li>Turtle</h3>
+				<p>And as the final topic of this chapter, we will take a look at the Turtle library.
+				<br>This library allows us to draw pictures programmatically, which, as we all know, is much more fun than computing arithmetic operations, isn't it.
+				<br>To use the <b>Turtle</b> library, we have to import it first.
+				<br>The library is very simple, we can draw lines using the <b>forward(LENGTH_PIXELS)</b> opeation and change our bearing using the <b>left(ANGLE)</b> or <b>right(ANGLE)</b> operations.
+				<br>There are other operations of course, but we don't need them right now.
+				<p>
+				<textarea rows="18" cols="150" readonly>
+program turtleExample
+import Turtle
+
+main
+	variable l : integer	
+	l := 100
+	variable a : integer	
+	a := 90
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+endmain
+				</textarea>
+				<p>
+				<br><img src="../images/ch1_turtle.png" alt="">
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
