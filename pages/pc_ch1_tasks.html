@@ -11,11 +11,18 @@
 				var btn = document.getElementById(btnID);
 				if (txt.style.display === "none") {
 					txt.style.display = "block";
-					btn.innerHTML = "Hide solution"
+					btn.innerHTML = "Hide solution";
 				} else {
 					txt.style.display = "none";
-					btn.innerHTML = "Show solution"
+					btn.innerHTML = "Show solution";
 				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
 			}
 		</script>	
 	</head>
@@ -237,6 +244,7 @@ endmain
 				<p>Start by declaring the necessary variables: <b>radius</b>, <b>pi</b> and <b>area</b>.
 				<p>Set <b>radius</b> to 2 and <b>pi</b> top 3.14 and compute and print the area value.
 				<br>Using these values, the result should be 12.56.
+				<p>
 				<textarea rows="12" cols="150" readonly>
 program circleArea
 import IO
