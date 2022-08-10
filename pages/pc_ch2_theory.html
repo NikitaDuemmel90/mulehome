@@ -7,6 +7,428 @@
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 2: Conditions and Control Flow</h1>		
+		<p>In the example of an ATM money withdrawal algorithm in the previous chapter we have seen steps, where we would jump to other steps depending on a specific condition.
+		<ol>
+			<li>Insert your debit card.</li>
+			<li>Choose the withdraw option.</li>
+			<li><font color="blue"><i>If desired, enter a specific value, go to 5.</i></font></li>
+			<li>Select one of the pre-set values.</li>
+			<li><font color="blue"><i>If desired, choose the denomination.</i></font></li>
+			<li><font color="blue"><i>Enter your PIN, if correct go to 8.</i></font></li>
+			<li><font color="blue"><i>Go to 6.</i></font></li>
+			<li>Take your card and money.</li>
+		</ol>
+		<br>However, we have not yet learned how to do it in our programs, in the simple examples that we have written until now, we have executed every step sequentially.
+		<br>In this chapter we will talk about conditional execution of certains parts of a program.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#truthValues">Truth Values</a></li>
+			<li><a href="#comparisonOperators">Comparison Operators</a></li>
+			<li><a href="#boolean">Boolean Algebra</a></li>
+			<li><a href="#boolean">Control Structures</a></li>
+			<li><a href="#ifStatement">If Statement</a></li>
+			<li><a href="#loopStatement">Loop Statement</a></li>
+			<li><a href="#userInput">Waiting for User Input</a></li>
+		</ol>
+		
+		<ol>
+			<p><br>
+			<h3 id="truthValues"><li>Truth Values</h3>
+				<p>
+				<br>Also when we were discussing values and data types we have already seen an examplary use of a truth value.
+				<br>Truth or logical values are used in programming to evaluate a specific condition and determine whether it is true or false.
+				<br>Therefore, there are only two possible truth values: <b>true</b> and <b>false</b>.
+				<p>
+				<textarea rows="12" cols="150" readonly>
+program booleanValues
+import IO
+
+main
+	variable t : boolean
+	variable f : boolean
+	t := true
+	f := false
+	IO.writeBoolean(t) IO.writeLine()
+	IO.writeBoolean(f) IO.writeLine()
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="comparisonOperators"><li>Comparison Operators</h3>
+				<p>Now that we have defined our logical values, we can use them to actually check whether some conditions are true or not.
+				<br>To do this, we can use conditional operators:
+				<ul>
+					<li><b>=</b> : equal, applicable to any type</li>
+					<li><b>/=</b> : not equal, applicable to any type</li>
+					<li><b>&lt;</b> : lesser than, applicable to numerical types</li>
+					<li><b>&gt;</b> : greater than, applicable to numerical types</li>
+					<li><b>&lt;=</b> : lesser than or equal, applicable to numerical types</li>
+					<li><b>&gt;=</b> : greater than or equal, applicable to numerical types</li>
+				</ul>
+				<p>For example, <b>2 + 2 = 4</b> will yield <b>true</b> while <b>2 + 2 /= 4</b> will yield <b>false</b>.
+				<p>
+				<textarea rows="11" cols="150" readonly>
+program comparisonOperators
+import IO
+
+main
+	IO.writeString("2 = 2 ---> ")	IO.writeBoolean(2 = 2)	IO.writeLine()	// true
+	IO.writeString("2 = 5 ---> ")	IO.writeBoolean(2 = 5)	IO.writeLine()	// false
+	IO.writeString("2 /= 5 ---> ")	IO.writeBoolean(2 /= 5)	IO.writeLine()	// true
+	IO.writeString("2 < 5 ---> ")	IO.writeBoolean(2 < 5)	IO.writeLine()	// true
+	IO.writeString("2 > 5 ---> ")	IO.writeBoolean(2 > 5)	IO.writeLine()	// false
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+						
+			<p><br>
+			<h3 id="boolean"><li>Boolean Algebra</h3>
+				<p>Sometimes we have to check more than one condition, for example we want to check if two numbers <b>a</b> and <b>b</b> are equal and are greater than 0.
+				<br>To do this, we have to define at least two conditions: <b>a = b</b> and <b>a > 0</b>.
+				<br>Right now, we have two separate expressions, however both must true in our scenario, we have to combine them using a logical operator <b>and</b>: <b>a = b and a > 0</b>.
+				<br>Now we have one logical expression, which is only then true, if both subexpressions are also true.
+				<p>To sum it up, we have three logical operators, ordered according to their precedence:
+				<ol>
+					<li><b>not</b> : negates the expression</li>
+					<li><b>and</b> : the expression is true if both sides of it are true, false otherwise</li>
+					<li><b>or</b> : the expression is true if at least one side is true, false only when both sides are false</li>
+				</ol>
+				<table >
+					<tr>
+						<td>
+							<table class="booltable" cellspacing="0">
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>AND</b></td>
+									<td class="booltablecell"><b>true</b></td>
+									<td class="booltablecell"><b>false</b></td>
+								</tr>
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>true</b></td>
+									<td class="booltablecell"><font color="green">true</font></td>
+									<td class="booltablecell"><font color="red">false</font></td>
+								</tr>
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>false</b></td>
+									<td class="booltablecell"><font color="red">false</font></td>
+									<td class="booltablecell"><font color="red">false</font></td>
+								</tr>
+							</table>
+						</td>
+						<td>
+							<table class="booltable" cellspacing="0">
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>OR</b></td>
+									<td class="booltablecell"><b>true</b></td>
+									<td class="booltablecell"><b>false</b></td>
+								</tr>
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>true</b></td>
+									<td class="booltablecell"><font color="green">true</font></td>
+									<td class="booltablecell"><font color="green">true</font></td>
+								</tr>
+								<tr class="booltablecell">
+									<td class="booltablecell"><b>false</b></td>
+									<td class="booltablecell"><font color="green">true</font></td>
+									<td class="booltablecell"><font color="red">false</font></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<p>The precedence is important since it determines in which sequence the operators are evaluated.
+				<br>Similar to how multiplication or division is evaluated before addition or subtraction, the <b>not</b> operator is always applied first.
+				<br>Afterwards, the operator <b>and</b> is evaluated before the operator <b>or</b>.
+				<br>For example, in the expression <b>x < 0 and x = -5 or x > 0 and x = 5</b> we would first evaluate the expressions <b>x < 0 and x = -5</b> and <b>x > 0 and x = 5</b>.
+				<br>Once done, we would compare the results with the <b>or</b> operator
+				<p>To get a feeling for the boolean algebra, copy the example below and play around with it assigning different values to x or defining new expressions.
+				<p>
+				<textarea rows="16" cols="150" readonly>
+program booleanOperators
+import IO
+import Lists
+
+main
+	variable x : integer
+	x := 5
+	
+	IO.writeString("0 < x < 10 ---> ")		IO.writeBoolean(x > 0 and x < 10)	IO.writeLine()
+	IO.writeString("x = 0 or x = 5 ---> ")		IO.writeBoolean(x = 0 or x = 5)		IO.writeLine()
+	IO.writeString("x is not less than 5 ---> ")	IO.writeBoolean(not (x < 5))		IO.writeLine()
+	
+	IO.writeLine()
+	IO.writeBoolean(x < 0 and x = -5 or x > 0 and x = 5)	IO.writeLine()
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="ifStatement"><li>Control Structures</h3>
+				<p>As already mentioned at the beginning of this chapter, until now we were executing our programs in a purely sequential manner.
+				<br>We have also said that, depending on specific conditions, which we now know how to define using logical values and boolean algebra, we can skip or repeat certain steps.
+				<br>Thus we have three concepts to define the flow of our program:
+				<ul>
+					<li><b>Sequence</b> - simple sequential execution of steps:</li>
+					<ol>
+						<li>Declare integer variable x</li>
+						<li>Assign 5 to x</li>
+						<li>Print value of x</li>
+						<li>End of the algorithm</li>
+					</ol>
+					<li><b>Conditional branching</b> - execution or skipping certain steps depending on a condition:</li>
+					<ol>
+						<li>If value of x is less than 0, go to 3</li>
+						<li>Compute the root of x and print the result</li>
+						<li>End of the algorithm</li>
+					</ol>
+					<li><b>Repetition</b> - repeating certain steps:</li>
+					<ol>
+						<li>Increment the value of x by 1</li>
+						<li>Print value of x</li>
+						<li>Go to 1</li>
+						<li>End of the algorithm</li>
+					</ol>
+				</ul>
+				<p>As you can see, in the last example we would have an endless repetition, i.e. we would eternally increment our x and print its value never reaching the end.
+				<br>To prevent such situations, we have to define termination conditions for our repetitions:
+				<ol>
+					<li>Increment the value of x by 1</li>
+					<li>Print value of x</li>
+					<li><i>If value of x equals 10, goto 5</i></li>
+					<li>Go to 1</li>
+					<li>End of the algorithm</li>
+				</ol>
+				<p>This imprived version of our algorithm would repeat the required steps until <b>x</b> reaches the value of 10, in which case the algorithm will terminate.
+				<p>It should be noted that modern high level programming languages no longer use a <b>goto</b> instruction, instead they rely on conditional statements, loops and recursion.
+				<br>We will handle recursion in the last chapter, for now, let us concentrate on conditional statements and loops.
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="ifStatement"><li>If Statement</h3>
+				<p>If statements allow us to check a condition and execute certain lines of code is this condition is met:
+				<p>
+				<textarea rows="11" cols="150" readonly>
+program ifStatement1
+import IO
+
+main
+	variable x : integer
+	x := 5
+	if x = 5 then				// the execution condition is checked here
+		IO.writeString("x is equal 5")	// code that is executed if the condition is true
+	endif
+endmain
+				</textarea>
+				<p>The line of code between <b>then</b> and <b>endif</b> will only be executed in the value of <b>x</b> is 5, which is true in this case.
+				<p>If statements also allow us to define several branches, in fact we can define as many branches as we like.
+				<br>We can also nest our if statements, allowing us to implement more complex branching.
+				<p>
+				<textarea rows="23" cols="150" readonly>
+program ifStatement2
+import IO
+
+main
+	variable x : integer
+	x := -5
+	
+	if x >= 0 and x < 10 then
+		IO.writeString("x is in range [0 .. 10[")
+		IO.writeLine()
+	elseif x < 0 then
+		IO.writeString("x is negative")
+		IO.writeLine()
+		if x > -10 then
+			IO.writeString("x is in range ]-10 .. 0[")
+			IO.writeLine()
+		endif
+	else
+		IO.writeString("x is greater or equal 10")
+		IO.writeLine()
+	endif
+endmain
+				</textarea>
+				<p>By now we can start implementing a simple logic for our ATM money withdrawal algorithm.
+				<br>We want a simple program where we can define our account balance, enter the amount of money to withdraw and check if we can actually withdraw that amount.
+				<br>If we can, the account balance should be reduced by the respective amount.
+				<p>
+				<textarea rows="21" cols="150" readonly>
+program simpleATM
+import IO
+
+main
+	variable balance : integer
+	balance := 500	
+	
+	IO.writeString("Please enter the amount of money to withdraw: ")
+	variable amount : integer
+	amount := IO.readInteger()
+	
+	if balance >= amount then
+		balance := balance - amount
+		IO.writeString("Withdrawal successful, current balance: ")
+		IO.writeInteger(balance)
+	else 
+		IO.writeString("Withdrawal not possible, current balance: ")
+		IO.writeInteger(balance)
+	endif		
+endmain
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="loopStatement"><li>Loop Statement</h3>
+				<p>The final control structure is repetition.
+				<br>This can be achieven either via recursion, which we will discuss in the last chapter, or by using loops.
+				<br>Most modern programming languages that support loops offer various kinds of loops which allow to specify their own termination conditions.
+				<br>MuLE, on the other hand, offers a single loop construct, which is by definition infinite.
+				<br>That means, that we have to use an if statement to check the termination condition.
+				<p>The following example demonstrates a simple loop:
+				<p>
+				<textarea rows="17" cols="150" readonly>
+program loopStatement
+import IO
+
+main
+	variable i : integer
+	i := 0
+	loop
+		if i = 4 then
+			exit
+		endif
+		IO.writeString("i: ")
+		IO.writeInteger(i)
+		IO.writeLine()
+		i := i + 1
+	endloop
+endmain
+				</textarea>
+				<p>The produced output is:
+				<p>
+				<textarea rows="5" cols="150" readonly>
+i: 0
+i: 1
+i: 2
+i: 3
+				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="userInput"><li>Waiting for User Input</h3>
+				<p>In the previous example we have demonstrated a loop, which runs a set amount of time.
+				<br>However, sometimes we do not know how often we want to execute certain lines of code.
+				<br>For example, if we want to allow our algorithm to wait for user input and allow different actions depending on that input.
+				<br>We can do that with a loop, which may run for a potentially infinite number of times.
+				<p>
+				<textarea rows="17" cols="150" readonly>
+program userInput
+import IO
+
+main
+	loop
+		IO.writeString("Loop executed, do you want to run it again?\n")
+		IO.writeString("Enter n or N to terminate.")
+		variable input : string
+		input := IO.readString()
+		if input = "n" or input = "N" then
+			exit
+		endif
+	endloop
+endmain
+				</textarea>
+				<p>The program will terminate only if we enter <b>n</b> or <b>N</b>.
+				<p>Let us now expand our previous simple ATM example.
+				<br>We want to display our current account balance, and offer three options: terminate the program, transfer money to the account or withdraw money.
+				<p>
+				<textarea rows="35" cols="150" readonly>
+program userInputATM
+import IO
+import Strings
+
+main
+	variable balance : rational
+	loop
+		IO.writeString("Your current balance: " & Strings.rationalToString(balance) & "\n")
+		IO.writeString("Enter 1 to transfer money to you account.\n")
+		IO.writeString("Enter 2 to withdraw money from you account.\n")
+		IO.writeString("Enter 0 to terminate the program.\n")
+		variable input : integer
+		input := IO.readInteger()
+		if input = 0 then
+			exit
+		elseif input = 1 then
+			IO.writeString("Enter the amount of money to transfer: ")
+			variable amount : rational
+			amount := IO.readRational()
+			balance := balance + amount
+		elseif input = 2 then
+			IO.writeString("Enter the amount of money to withdraw: ")
+			variable amount : rational
+			amount := IO.readRational()
+			if balance - amount &lt; 0 then
+				IO.writeString("Withdrawal not possible.\n")
+			else
+				balance := balance - amount
+			endif
+		else
+			IO.writeString("Unknown command!\n")
+		endif
+	endloop
+endmain
+				</textarea>
+				<p>The user interaction could look like this:
+				<p>
+				<textarea rows="31" cols="150" readonly>
+Your current balance: 0.0
+Enter 1 to transfer money to you account.
+Enter 2 to withdraw money from you account.
+Enter 0 to terminate the program.
+1
+Enter the amount of money to transfer: 1000
+Your current balance: 1000.0
+Enter 1 to transfer money to you account.
+Enter 2 to withdraw money from you account.
+Enter 0 to terminate the program.
+2
+Enter the amount of money to withdraw: 500
+Your current balance: 500.0
+Enter 1 to transfer money to you account.
+Enter 2 to withdraw money from you account.
+Enter 0 to terminate the program.
+2
+Enter the amount of money to withdraw: 900
+Withdrawal not possible.
+Your current balance: 500.0
+Enter 1 to transfer money to you account.
+Enter 2 to withdraw money from you account.
+Enter 0 to terminate the program.
+9
+Unknown command!
+Your current balance: 500.0
+Enter 1 to transfer money to you account.
+Enter 2 to withdraw money from you account.
+Enter 0 to terminate the program.
+0
+				</textarea>
+				<p>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>			
+			
+		</ol>
+		<p><br>
 	</body>
 </html>

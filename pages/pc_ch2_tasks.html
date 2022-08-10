@@ -4,9 +4,419 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
 		<link rel="stylesheet" href="../css/style.css">		
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution";
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution";
+				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
+			}
+		</script>
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 2: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#abs">Absolute Value</a></li>
+			<li><a href="#fact">Factorial</a></li>
+			<li><a href="#gcd">Greatest Common Divisor</a></li>
+			<li><a href="#numGuess">Number Guessing Game</a></li>
+			<li><a href="#polygon">Regular Polygon</a></li>
+			<li><a href="#stair">Turtle Stair</a></li>
+		</ol>
+		
+		<ol>						
+			<p><br>
+			<h3 id="abs"><li>Absolute Value</h3>
+				<p>Your first task is to compute the absolute value of a difference of two values using an if statement.
+				<br>Print the result on the console.
+				<br>You can subtract the smaller value from the bigger.
+				<br>Alternatively, you can compute <b>a - b</b> and negate the result if it is less than 0.
+				<p>
+				<textarea rows="15" cols="150" readonly>
+program absoluteValue
+import IO
+
+main
+	variable a : integer
+	variable b : integer
+	variable result : integer
+	a := 42
+	b := 55 
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_1" rows="29" cols="150" readonly style="display:none;">
+program absoluteValue
+import IO
+
+main
+	variable a : integer
+	variable b : integer
+	variable result : integer
+	a := 42
+	b := 55 
+	
+	// Solution 1: subtract the lesser number from the grater one
+	if (a > b) then
+		result := a - b
+	else
+		result := b - a
+	endif
+	IO.writeInteger(result)
+	IO.writeLine()
+	
+	
+	// Solution 2: compute a - b and negate the result if it is less than 0
+	result := a - b
+	if (result &lt; 0) then
+		result := -result
+	endif
+	IO.writeInteger(result)
+	IO.writeLine()
+endmain				
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>	
+			
+			<p><br>
+			<h3 id="fact"><li>Factorial</h3>
+				<p>Your task is to compute the factorial of an integer using a loop.
+				<br><i>5! = 5 * 4 * 3 * 2 * 1 = 120</i>
+				<br>Print the result on the console.
+				<p>
+				<textarea rows="13" cols="150" readonly>
+program factorial
+import IO
+
+main	
+	variable n : integer
+	variable result : integer
+	n := 5
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_2" rows="18" cols="150" readonly style="display:none;">
+program factorial
+import IO
+
+main	
+	variable n : integer
+	variable result : integer
+	n := 5
+	result := 1	
+	loop 
+		result := result * n
+		n := n - 1
+		if n = 1 then 	
+			exit  
+		endif
+	endloop
+	IO.writeInteger(result)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="gcd"><li>Greatest Common Divisor</h3>
+				<p>Your task is to compute the greates common divisor of two values.
+				<br>To do this, you can subtract the lesser value from the greater one until both values are equal.
+				<br>You need to overwrite old values with new ones, e.g. is <b>a</b> is lesser than <b>b</b>, you compute the new <b>b</b> as <b>b - a</b>.
+				<br><i>GCD of 21 and 14 is 7</i>
+				<p>
+				<textarea rows="16" cols="150" readonly>
+program gcd
+import IO
+
+main
+	variable a : integer
+	variable b : integer
+	IO.writeString("Enter the value of a: ")
+	a := IO.readInteger()
+	IO.writeString("Enter the value of b: ")
+	b := IO.readInteger()
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_3" onclick="toggleTextArea('ch1_sol_3', 'ch1_btn_3')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_3" rows="25" cols="150" readonly style="display:none;">
+program gcd
+import IO
+
+main
+	variable a : integer
+	variable b : integer
+	IO.writeString("Enter the value of a: ")
+	a := IO.readInteger()
+	IO.writeString("Enter the value of b: ")
+	b := IO.readInteger()
+	
+	loop 
+		if a = b then 
+			IO.writeString("The GCD is: ")
+			IO.writeInteger(b)
+			exit
+		endif
+		if a &lt; b then 
+			b := b - a
+		 else 
+			a := a - b
+		endif
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="numGuess"><li>Number Guessing Game</h3>
+				<p>Your next task is to implement a simple number guessing game.
+				<br>The program must generate a random integer between 0 and 99, this can be done using the library operation <b>Mathematics.randomInteger(0, 99)</b>.
+				<br>To use this operation, you have to import the <b>Mathematics</b> library first.
+				
+				<p>The user has to enter a number.
+				<br>If the number equals the random number, the program is terminated and the user is given the number of attemts required to guess the number.
+				<br>If the guessed number is not equal, the program has to tell the user if it is greater or less than the random number.
+				
+				<p>The entire interaction can look like this:				
+				<p>
+				<textarea rows="11" cols="150" readonly>
+Please enter a number between 0 and 99: 50
+Your number is lesser than the random number.
+Please enter a number between 0 and 99: 70
+Your number is greater than the random number.
+Please enter a number between 0 and 99: 60
+Your number is greater than the random number.
+Please enter a number between 0 and 99: 55
+Your number is greater than the random number.
+Please enter a number between 0 and 99: 52
+Correct! Your number of attempts is 5
+				</textarea>	
+				
+				<p>
+				<textarea rows="17" cols="150" readonly>
+program numberGuessingGame
+import IO
+import Mathematics
+import Strings 
+
+main 
+	variable attempts : integer
+	variable ownNumber : integer
+	variable randomNumber : integer
+	attempts := 0
+	randomNumber := Mathematics.randomInteger(0, 99)
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_4" onclick="toggleTextArea('ch1_sol_4', 'ch1_btn_4')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_4" rows="32" cols="150" readonly style="display:none;">
+program numberGuessingGame
+import IO
+import Mathematics
+import Strings 
+
+main 
+	variable attempts : integer
+	variable ownNumber : integer
+	variable randomNumber : integer
+	attempts := 0
+	randomNumber := Mathematics.randomInteger(0, 99)
+	
+	loop 
+		attempts := attempts + 1
+		IO.writeString("Please enter a number between 0 and 99: ")
+		ownNumber := IO.readInteger()
+		if ownNumber = randomNumber 
+		then  
+			IO.writeString("Correct! Your number of attempts is " & Strings.integerToString(attempts) & "\n")
+			exit
+		else 
+			if ownNumber > randomNumber 
+			then  
+				IO.writeString("Your number is greater than the random number.\n")
+			
+			else 
+				IO.writeString("Your number is lesser than the random number.\n")
+			endif
+		endif
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="polygon"><li>Regular Polygon</h3>
+				<p>Your task is to draw a regular polygon using Turtle.
+				<br>As a reminder, in the first chapter we have drawn a Turtle square using the following code.
+				<p>
+				<textarea rows="18" cols="150" readonly>
+program turtleExample
+import Turtle
+
+main
+	variable l : integer	
+	l := 100
+	variable a : integer	
+	a := 90
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+	Turtle.forward(l)
+	Turtle.left(a)
+endmain
+				</textarea>
+				<p>As you can see, we repeating lines of code, which we can remove by using a loop.
+				<br>At first, optimize this example using a loop to draw a square.
+				
+				<p>Once done, allow the user to enter the number of edges as well as their length to draw a generic regular polygon.
+				<br>You will have to dynamically compute the angle using the number of entered edges.
+				<br>For example, if the user enters 5 as the number of edges, the angle should be 72 degree, or 60 degree if the number of edges is 6.
+				<p>A polygon with the following parameters should look like in the image below.
+				<textarea rows="3" cols="150" readonly>
+Enter the number of edges: 6
+Enter the length of edges: 50
+				</textarea>
+				<br><img src="../images/ch2_polygon.png" alt="">
+				<p>
+				<textarea rows="9" cols="150" readonly>
+program regularPolygon
+import IO
+import Turtle
+main
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_5" onclick="toggleTextArea('ch1_sol_5', 'ch1_btn_5')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_5" rows="23" cols="150" readonly style="display:none;">
+program regularPolygon
+import IO
+import Turtle
+main
+	variable edges : integer
+	variable length : integer
+	variable angle : rational
+	IO.writeString("Enter the number of edges: ")
+	edges := IO.readInteger()
+	IO.writeString("Enter the length of edges: ")
+	length := IO.readInteger()
+	angle := 360.0 / edges
+	
+	Turtle.setDirection(90)
+	variable i : integer
+	loop
+		if i = edges then exit endif
+		i := i + 1
+		Turtle.forward(length)
+		Turtle.left(angle)
+	endloop
+endmain			
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="stair"><li>Turtle Stair</h3>
+				<p>Your task is to implement a stair pattern using Turtle and a loop.
+				<br>Start by drawing a single step of the stair.
+				<br>Once done, wrap it in into a loop to get the same result as in the image.
+				<br><img src="../images/ch2_stair.png" alt="">
+				<p>
+				<textarea rows="13" cols="150" readonly>
+program turtleStair
+import IO
+import Turtle
+
+main
+	variable stair : integer
+	stair := 50
+	Turtle.setPosition(150, 300)	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_6" onclick="toggleTextArea('ch1_sol_6', 'ch1_btn_6')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_6" rows="19" cols="150" readonly style="display:none;">
+program turtleStair
+import IO
+import Turtle
+
+main
+	variable stair : integer
+	stair := 50
+	Turtle.setPosition(150, 300)	
+	variable i : integer
+	loop
+		if i > 4 then exit endif
+		i := i + 1
+		Turtle.forward(stair)
+		Turtle.right(90)
+		Turtle.forward(stair)
+		Turtle.left(90)
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+		</ol>
+		<p><br>
 	</body>
 </html>
