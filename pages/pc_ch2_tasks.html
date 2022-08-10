@@ -381,8 +381,8 @@ import IO
 import Turtle
 
 main
-	variable stair : integer
-	stair := 50
+	variable length : integer
+	length := 50
 	Turtle.setPosition(150, 300)	
 	// IMPLEMENT YOUR SOLUTION HERE
 	
@@ -398,16 +398,16 @@ import IO
 import Turtle
 
 main
-	variable stair : integer
-	stair := 50
+	variable length : integer
+	length := 50
 	Turtle.setPosition(150, 300)	
 	variable i : integer
 	loop
 		if i > 4 then exit endif
 		i := i + 1
-		Turtle.forward(stair)
+		Turtle.forward(length)
 		Turtle.right(90)
-		Turtle.forward(stair)
+		Turtle.forward(length)
 		Turtle.left(90)
 	endloop
 endmain

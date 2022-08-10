@@ -7,6 +7,135 @@
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 3: Enumerations, Compositions, Lists</h1>		
+		<p>Previously, we have used only the predefined basic types <b>integer</b>, <b>rational</b>, <b>boolean</b> and <b>string</b>.
+		<br>In this chapter we will take a look at user defined enumeration and composition types.
+		<br>Additionally, we will also learn to use the generic list type.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#enums">Enumerations</a></li>
+			<li><a href="#compositions">Compositions</a></li>
+			<li><a href="#lists">Lists</a></li>
+			<li><a href="#lists2">Multi-dimensional Lists</a></li>
+		</ol>
+		
+		<ol>
+			
+			<p><br>
+			<h3 id="lists"><li>Enumerations</h3>
+				<p>Let us first take a look at the picture below.
+				<br><img src="../images/ch3_rgb.png" width="360" height="360" alt="">
+				<p>We see the color representation of the RGB color system.
+				<br>In this system, we can code any color by combining three colors: red, green and blue.
+				<br>We will not go indepth just yet, for now we want to know how we would declare a <b>colorRGB</b> variable and assign it a simple value, either <b>red</b>, <b>green</b> or <b>blue</b>.
+				<br>Certainly we could use the data type string, just like that:
+				<p>
+				<textarea rows="3" cols="150" readonly>
+variable colorRGB : string
+colorRGB := "red"
+				</textarea>
+				<p>However, this way, nothing prohibits us to assign a different value. 
+				<br>For example <b>"yellow"</b> or even <b>"apple"</b>, which may be not relevant to the RGB system, but may not even be semantically a color at all.
+				<br>Of course, we could implement <b>if ... else</b> checks, but this would possibly make our program more complicated the bigger it gets.
+				<br>An even better example would be names of the days of a week: <i>monday, tuesday, wednesday, thursday, friday, saturday</i> and <i>sunday</i>.
+				
+				<p>Thus, we need another mechanism to define our own finite set of values and assign them to a type.
+				<br>This leads us to our first user defined type: <b>enumeration</b>
+				<p>
+				<textarea rows="15" cols="150" readonly>
+program enumerations1
+import IO
+import Strings
+
+type RGB : enumeration		// we define our own type, named RGB
+	RED, GREEN, BLUE	// and specify its values
+endtype
+
+main
+	variable rgb : RGB	// we declare an RGB variable, its default value is RED
+	IO.writeString(Strings.genericToString(rgb))	IO.writeLine()	// prints RED
+	rgb := RGB.GREEN	// to assign a different value, we have to access it from within our RGB type
+	IO.writeString(Strings.genericToString(rgb))	IO.writeLine()	// print GREEN
+endmain
+				</textarea>
+				<p>So, we have defined our own type with a set of values, we can now use this type to declare variables.
+				<br>Such variables are restricted to the values, defined in this type.
+				<br>As we can see, we have to access these values using their qualified names. 
+				<br>Similarly how we have to type <b>IO.writeString()</b> instead of just calling <b>writeString()</b> directly.
+				<p>Let us expand this example by adding another type <b>CMY</b>:
+				<p>
+				<textarea rows="26" cols="150" readonly>
+program enumerations2
+import IO
+import Strings
+
+type RGB : enumeration
+	RED, GREEN, BLUE
+endtype
+
+type CMY : enumeration
+	CYAN, MAGENTA, YELLOW
+endtype
+
+main
+	variable rgb : RGB
+	IO.writeString(Strings.genericToString(rgb))	IO.writeLine()
+	rgb := RGB.GREEN
+	IO.writeString(Strings.genericToString(rgb))	IO.writeLine()
+	
+	variable cmy : CMY
+	IO.writeString(Strings.genericToString(cmy))	IO.writeLine() 
+	cmy := CMY.YELLOW  
+	IO.writeString(Strings.genericToString(cmy))	IO.writeLine()
+	
+	// rgb := CMY.YELLOW // &lt;-- this line won't compile
+endmain
+				</textarea>
+				<p>Try to uncomment the last line.
+				<br>As the comment suggests, this line will produce a compiler error.
+				<br>Just as we can not assign a string value to an integer variable, we cannot assign a <b>CMY</b> value to an <b>RGB</b> variable.
+				<p>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="compositions"><li>Compositions</h3>
+				<p>
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>
+				<p>
+				<br><img src="../images/wip.png" alt="">
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="lists"><li>Lists</h3>
+				<p>
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>
+				<p>
+				<br><img src="../images/wip.png" alt="">
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="lists2"><li>Multi-dimensional Lists</h3>
+				<p>
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>
+				<p>
+				<br><img src="../images/wip.png" alt="">
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+		</ol>
+		<p><br>
 	</body>
 </html>
