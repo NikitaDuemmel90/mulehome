@@ -3,10 +3,432 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/style.css">		
+		<link rel="stylesheet" href="../css/style.css">	
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution";
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution";
+				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
+			}
+		</script>
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 4: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#gcdlcm">GCD and LCM</a></li>
+			<li><a href="#linfun">Linear Function</a></li>
+			<li><a href="#polygons">Polygons</a></li>
+			<li><a href="#chessboard">Chessboard</a></li>
+		</ol>
+		
+		<ol>		
+			
+			<p><br>
+			<h3 id="gcdlcm"><li>GCD and LCM</h3>
+				<ol>
+					<li>Implement a function <b>gcd</b>, which returns the greatest common divisor of two parameters.
+					<br>Feel free to reuse the previous solution from chapter 2, just wrapt it up in a function.</li>
+					<li>Implement a function <b>lcm</b>, which returns the least common multiple of two parameters.
+					<p><img src="../images/ch4_lcm.png" alt=""></li>
+					<li>Test your implementation.</li>
+				</ol>			
+				<p>Just as an example: <i>gcd(15, 21) = 3, lcm(15, 21) = 105</i>.
+				<p>
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_1" rows="27" cols="150" readonly style="display:none;">
+program gcdlcm
+import IO 
+
+
+operation gcd(parameter a : integer, parameter b : integer) : integer 
+	loop 
+		if a = b then 
+			return b
+		endif
+		if a < b then 
+			b := b - a
+		 else 
+			a := a - b 
+		endif
+	endloop
+endoperation
+
+operation lcm(parameter a : integer, parameter b : integer) : integer 
+	return a * b div gcd(a, b)   
+endoperation
+
+main 
+	IO.writeInteger(gcd(15, 21))  
+	IO.writeLine() 
+	IO.writeInteger(lcm(15, 21))
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>		
+			
+			<p><br>
+			<h3 id="linfun"><li>Linear Function</h3>
+				<ol>
+					<li>Implement the linear function <i>f(x) = 0.5*x + 1</i>.</li>
+					<li>Declare a composition <b>Point</b>, which stores x and y coordinates.
+					<br>Create a list of points and fill it with five points using the function <i>f(x)</i> with <i>x &isin; [1, 2, 3, 4, 5]</i>.</li>
+					<li>Implement a procedure <b>drawLine(...)</b> which accepts a list of points as a parameter and draws a line according to this list.
+					<br>Be aware, that you have to translate point coordinates into pixel coordinates before drawing.
+					<br>You can use the <b>Turtle.moveTo(x, y)</b> operation.</li>
+				</ol>
+				<p><img src="../images/ch4_turtlelinfun.png" alt="">
+				<p>
+				<textarea rows="24" cols="150" readonly>
+program linearFunction
+import Mathematics 
+import Turtle 
+import IO 
+import Lists
+
+// IMPLEMENT YOUR SOLUTION HERE
+	
+// END OF IMPLEMENTATION
+
+main 		
+	Turtle.showCoordinateSystem(true)
+	Turtle.setThickness(2)
+	variable i : integer
+	loop if i = 5 then exit endif
+		IO.writeRational(f(i))
+		IO.writeLine()
+		i := i + 1
+	endloop
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_2" rows="51" cols="150" readonly style="display:none;">
+program linearFunction
+
+import Mathematics 
+import Turtle 
+import IO 
+import Lists 
+
+type Point : composition   
+	attribute x : rational
+	attribute y : rational
+endtype 
+
+operation f(parameter x : rational) : rational 
+	return 0.5 * x + 1.0
+endoperation
+
+operation drawLine(parameter punkte : list<Point>) 
+	Turtle.showCoordinateSystem(true)
+	Turtle.setPosition(punkte[0].x * 100, punkte[0].y * 100)
+	variable i : integer
+	i := 1
+	loop
+		if i = Lists.lengthOf(punkte) then exit endif
+		Turtle.moveTo(punkte[i].x * 100, punkte[i].y * 100)
+		i := i + 1
+	endloop
+endoperation
+
+main 	
+	Turtle.showCoordinateSystem(true)
+	Turtle.setThickness(2)
+	variable i : integer
+	loop if i = 5 then exit endif
+		IO.writeRational(f(i))
+		IO.writeLine()
+		i := i + 1
+	endloop
+	
+	i := 0
+	variable points : list<Point>
+	loop if i = 5 then exit endif
+		variable point : Point
+		point.x := i
+		point.y := f(i) 
+		points := Lists.append(points, point) 
+		i := i + 1
+	endloop
+	
+	drawLine(points)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>		
+			
+			<p><br>
+			<h3 id="polygons"><li>Polygons</h3>
+				<p>Implement the procedures <b>draw(...)</b> and <b>move(...)</b> to get the following image:
+				<p><img src="../images/ch4_turtlepolygon.png" alt="">
+				<p>You can use the following operations:
+				<ul>
+					<li><b>Turtle.startFilledPolygon(color : Turtle.Colors)</b> - initiates drawing a colored polygon.</li>
+					<li><b>Turtle.endFilledPolygon()</b> - finishes drawing a colored polygon.</li>
+					<li><b>Turtle.penUp()</b> - stops drawing while the cursor is moving.</li>
+					<li><b>Turtle.penDown()</b> - starts drawing again, when <b>Turtle.penUp()</b> was previously called.</li>
+				</ul>
+				<p>
+				<textarea rows="21" cols="150" readonly>
+program turtlePolygons
+import Turtle
+
+// TODO: implement draw(...)
+
+// TODO: implement move(...)
+
+main   
+	Turtle.setDirection(90)
+	Turtle.showCoordinateSystem(true)
+	Turtle.setFrameSize(300,200)
+	Turtle.setPosition(50, 150)
+	Turtle.setThickness(2)
+	draw(4, 60, Turtle.Colors.RED)
+	move(65)
+	draw(3, 45, Turtle.Colors.GREEN)
+	move(50)
+	draw(6, 45, Turtle.Colors.BLUE)
+	Turtle.showCursor(false)
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_3" onclick="toggleTextArea('ch1_sol_3', 'ch1_btn_3')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_3" rows="35" cols="150" readonly style="display:none;">
+program turtlePolygons
+import Turtle
+
+operation draw(parameter n : integer, parameter l : integer, parameter color : Turtle.Colors)     
+	Turtle.startFilledPolygon(color)
+	variable a : integer 
+	loop 
+		if a = n then exit endif
+		Turtle.forward(l) 
+		Turtle.left(360.0/n)	
+		a := a + 1	
+	endloop
+	Turtle.endFilledPolygon() 	
+endoperation
+
+operation move(parameter a : integer) 
+	Turtle.penUp()
+	Turtle.forward(a)
+	Turtle.penDown()
+endoperation
+
+main   
+	Turtle.setDirection(90)
+	Turtle.showCoordinateSystem(true)
+	Turtle.setFrameSize(300,200)
+	Turtle.setPosition(50, 150)
+	Turtle.setThickness(2)
+	draw(4, 60, Turtle.Colors.RED)
+	move(65)
+	draw(3, 45, Turtle.Colors.GREEN)
+	move(50)
+	draw(6, 45, Turtle.Colors.BLUE)
+	Turtle.showCursor(false)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>		
+			
+			<p><br>
+			<h3 id="chessboard"><li>Chessboard</h3>
+				<p>Move parts of your previous chessboard implementation from chapter 3 into operations:
+				<ul>
+					<li>The operation <b>initialiseBoard(...)</b> should include the previous initialization semantics.</li>
+					<li>The operation <b>printBoard(...)</b> should include the previous printing on the console semantics.</li>
+					<li>The operation <b>drawBoard(...)</b> must draw the chessboard using Turtle.
+					<br>You can increase the drawing speed using <b>Turtle.setAnimationSpeed(Turtle.Speed.FAST)</b>.</li>
+				</ul>
+				<p><img src="../images/ch4_turtlechess.png" alt="">
+				<p>
+				<textarea rows="39" cols="150" readonly>
+program turtleChessboard
+import Turtle 
+import IO 
+import Strings 
+import Lists
+
+type PieceType : enumeration 
+	PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+endtype
+
+type Color : enumeration 
+	BLACK, WHITE
+endtype
+
+type Piece : composition 
+	attribute pieceType : PieceType
+	attribute color : Color
+ endtype
+ 
+type Field : composition 
+	attribute color : Color 
+	attribute number : integer
+	attribute character : string
+	attribute piece : Piece
+endtype
+
+// TODO: implement initialiseBoard(...)
+
+// TODO: implement printBoard(...)
+
+// TODO: implement drawBoard(...) 
+
+main 	
+	variable chessboard : list<list<Field>>
+	chessboard := initialiseBoard(chessboard)
+	printBoard(chessboard) 
+	drawBoard(chessboard)
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_4" onclick="toggleTextArea('ch1_sol_4', 'ch1_btn_4')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_4" rows="108" cols="150" readonly style="display:none;">
+program turtleChessboard
+import Turtle 
+import IO 
+import Strings 
+import Lists
+
+type PieceType : enumeration 
+	PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+endtype
+
+type Color : enumeration 
+	BLACK, WHITE
+endtype
+
+type Piece : composition 
+	attribute pieceType : PieceType
+	attribute color : Color
+ endtype
+ 
+type Field : composition 
+	attribute color : Color 
+	attribute number : integer
+	attribute character : string
+	attribute piece : Piece
+endtype
+
+operation initialiseBoard(parameter chessboard : list<list<Field>>) : list<list<Field>>	
+	chessboard := [8 ** [8 ** Field{}]]
+	
+	variable abc : list<string>
+	abc := ["a", "b", "c", "d", "e", "f", "g", "h"]
+	
+	variable i : integer
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		variable j : integer
+		loop
+			if j = Lists.lengthOf(chessboard) then exit endif			
+			chessboard[i][j].number := 8-i	
+			chessboard[i][j].character := abc[j]
+			if (i + j) mod 2 = 1 
+			then 
+				chessboard[i][j].color := Color.BLACK
+			
+			else 
+				chessboard[i][j].color := Color.WHITE				
+			endif			
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop		
+	return chessboard
+endoperation
+
+operation printBoard(parameter chessboard : list<list<Field>>) 	
+	variable i : integer
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		IO.writeString(Strings.genericToString(chessboard[i]) & "\n")
+		i := i + 1
+	endloop
+endoperation
+
+operation drawBoard(parameter chessboard : list<list<Field>>) 
+	Turtle.setAnimationSpeed(Turtle.Speed.FAST)
+	Turtle.setDirection(90)
+	variable size : integer
+	size := 8
+	variable i : integer
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		variable j : integer
+		loop
+			if j = Lists.lengthOf(chessboard) then exit endif		
+			Turtle.setPosition(i*20+100, j*20+100)
+			if chessboard[i][j].color = Color.BLACK then 
+				Turtle.startFilledPolygon(Turtle.Colors.BLACK)
+				variable temp : integer
+				loop 
+					if temp = 4 then exit endif 
+					Turtle.forward(20)
+					Turtle.right(90)
+					temp := temp + 1
+				endloop
+				Turtle.endFilledPolygon()
+			endif
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop
+	Turtle.setPosition(100, 100)
+	variable temp : integer
+	loop 
+		if temp = 4 then exit endif 
+		Turtle.forward(size*20)
+		Turtle.right(90)
+		temp := temp + 1
+	endloop
+	Turtle.showCursor(false)
+endoperation
+
+main 	
+	variable chessboard : list<list<Field>>
+	chessboard := initialiseBoard(chessboard)
+	printBoard(chessboard) 
+	drawBoard(chessboard)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+		</ol>
+		<p><br>
 	</body>
 </html>

@@ -9,21 +9,82 @@
 	<body>	
 		<p><br>
 		<h1 id="top">Chapter 4: User Defined Operations</h1>	
+		<p>Up until now we have been writing our algorithms only inside the main procedure.
+		<br>In a sense, we were programming in a purely imperative way.
+		<br>So it is about time we should move proper into the topic of procedural programming and introduce user defined operations.
 		<h3 id="contents">Contents</h3>
 		<ol>
-			<li><a href="#template">Template</a></li>
+			<li><a href="#stdlibops">Standard Library Operations</a></li>
+			<li><a href="#reuse1">Reusability?</a></li>
+			<li><a href="#reuse2">Reusability!</a></li>
+			<li><a href="#functions">Functions</a></li>
 		</ol>
 		
-		<ol>
+		<ol>						
+			<p><br>
+			<h3 id="stdlibops"><li>Standard Library Operations</h3>
+				<p>In fact, we were using operations since the very beginning of this course.
+				<br>When we invoked <b>IO.writeString("Hello, world!")</b>, we have called a predefined operation from a standard library.
+				<br>We have relied on these operations to perform specific functionality again and again and again.
+				<p>As a small reminder, here are just a couple of these operations:
+				<ul>
+					<li><b>IO.writeString("Hello, world!")</b></li>
+					<li><b>Turtle.forward(100)</b></li>
+					<li><b>IO.readInteger()</b></li>
+					<li><b>Lists.lengthOf(lst)</b></li>
+					<li><b>Lists.append(lst, elem)</b></li>
+					<li><b>Strings.genericToString(lst)</b></li>
+				</ul>
+				
+				<p>Some of these operations just do something, like <b>IO.writeString("Hello, world!")</b> or <b>Turtle.forward(100)</b>.
+				<br>We cannot write these operations inside of an expression, e.g. <b>IO.writeString("Hello, world!") & "yay!"</b> is not a vlid expression.
+				<br>Such operations, which do not yield a value, are called <i>procedures</i>.
+				
+				<p>Operation which return a value, e.g. <b>IO.readInteger()</b> or <b>Lists.append(lst, elem)</b> are called <i>functions</i>.
+				<br>Usually, we invoke function inside of an expression, such as <b>IO.readInteger() + 1</b>.
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
 			
 			<p><br>
-			<h3 id="template"><li>Template</h3>
-				<p>
-				<p>
-				<textarea rows="1" cols="150" readonly>
-				</textarea>
-				<p>
-				<br><img src="../images/ch1_wip.png" alt="">
+			<h3 id="reuse1"><li>Reusability?</h3>
+				<p>Now that we see the value of reusable operations, let us take a look at a familiar scenario.
+				<br>We want to draw a square and a hexagon using Turtle.
+				<p><img src="../images/ch4_reuse1.png" alt="">
+				
+				<p>As we can see, we have a lot of common code, which is somewhat redundant.
+				<br>The only difference between the two loops is how often they are executed and how the angle is calculated.
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="reuse2"><li>Reusability!</h3>				
+				<p>So let us define an operation, which would draw us a polygon which we could reuse as much as we want.
+				<br>We transfer the code that is common into the body of the operation.
+				<p><img src="../images/ch4_reuse2.png" alt="">
+				<p>The parts that are actually different are parameterized.
+				<br>We specify that our operation accepts a parameter, which is then used inside of the operation.
+				<br>The value of the parameter is set when invoking the operation.
+				<br>Operations may have an arbitrary number of parameters.
+				<p><img src="../images/ch4_reuse3.png" alt="">
+				<p>Operations may have an arbitrary number of parameters.
+				<br>Let us add an additional parameter which will specify the length of our edges.
+				<p><img src="../images/ch4_reuse4.png" alt="">
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="functions"><li>Functions</h3>
+				<p>As mentioned, unlike procedures, functions return a value.
+				<br>Let us implement a simple linear function then:
+				<p><img src="../images/ch4_fun.png" alt="">
+				
+				<p>Procedures can be terminated with an empty return statement.
+				<p>Functions must have at least one return statement.
+				<br>The returned value must have the same type as the return type of the function.
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>

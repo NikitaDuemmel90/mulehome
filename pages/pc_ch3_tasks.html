@@ -3,10 +3,373 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/style.css">		
+		<link rel="stylesheet" href="../css/style.css">			
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution";
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution";
+				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
+			}
+		</script>
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 3: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#shopList">Shopping List</a></li>
+			<li><a href="#filter">Filter List</a></li>
+			<li><a href="#sort">Sort List</a></li>
+			<li><a href="#chess">Chessboard</a></li>
+		</ol>
+		
+		<ol>						
+			<p><br>
+			<h3 id="shopList"><li>Shopping List</h3>
+				<p>This task is the expansion of the shopping list example from chapter 3.
+				<ol>
+					<li>Declare a composition <b>Item</b> which can store the name of the item and its price.
+					<li>Initialize three items: <i>item1{bread, 1.99}, item2{beer, 14.99}, item3{ham, 3.99}</i>.
+					<br>Put all of these items into a single list and print the list on the console.
+					</li>
+					<li>Iterate over the list and compute the total price.</li>
+					<li>Create a <b>cheaperList</b>, iterate over the normal list and append items with the price of under 10.0 to the cheaper list.</li>
+				</ol>
+				<p>The output of the program should look like this:
+				<p>
+				<textarea rows="4" cols="150" readonly>
+Shopping list: [Item{name = bread, price = 1.99}, Item{name = beer, price = 14.99}, Item{name = ham, price = 3.99}]
+Total price: 20.97
+Cheaper list: [Item{name = bread, price = 1.99}, Item{name = ham, price = 3.99}]
+				</textarea>			
+				<p>
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_1" rows="53" cols="150" readonly style="display:none;">
+program shoppingList
+import Strings
+import IO 
+import Lists 
+
+type Item : composition 
+	attribute name : string
+	attribute price : rational
+endtype
+
+main 
+	variable item1 : Item 
+	variable item2 : Item
+	variable item3 : Item
+	
+	item1.name := "bread"
+	item1.price := 1.99
+	
+	item2.name := "beer"
+	item2.price := 14.99
+	
+	item3.name := "ham"
+	item3.price := 3.99
+	
+	variable shoppingList : list<Item>		
+	shoppingList := [item1, item2, item3]
+	IO.writeString("Shopping list: " & Strings.genericToString(shoppingList))
+	IO.writeLine()
+	
+	variable totalPrice : rational	
+	variable i : integer
+	loop
+		if i >= Lists.lengthOf(shoppingList) then exit endif
+		totalPrice := totalPrice + shoppingList[i].price
+		i := i + 1
+	endloop
+	IO.writeString("Total price: ")
+	IO.writeRational(totalPrice)
+	IO.writeLine()
+	
+	variable cheaperList : list<Item>		
+	i := 0
+	loop
+		if i >= Lists.lengthOf(shoppingList) then exit endif
+		if(shoppingList[i].price &lt; 10.00) then 
+			cheaperList := Lists.append(cheaperList, shoppingList[i])
+		endif
+		i := i + 1
+	endloop
+	IO.writeString("Cheaper list: " & Strings.genericToString(cheaperList))
+	IO.writeLine()
+endmain
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>	
+			
+			<p><br>
+			<h3 id="filter"><li>Filter List</h3>
+				<p>Your are given a list with 10 random generated numbers between 0 and 10.
+				<br>Your task is to filter odd numbers out of this list and print the filtered list.
+				<p>The result could look like that:
+				<p>				
+				<textarea rows="3" cols="150" readonly>
+[6, 2, 6, 2, 9, 4, 7, 8, 2, 3]
+[6, 2, 6, 2, 4, 8, 2]
+				</textarea>		
+				<p><b>Hint:</b> you can use <b>removePosition</b> to remove odd numbers or <b>append</b> even numbers to a temporary list. 
+				<p>
+				<textarea rows="24" cols="150" readonly>
+program filterList
+import IO
+import Lists
+import Mathematics 
+import Strings
+
+main	
+	variable lst : list<integer>
+	variable length : integer
+	length := 10
+	variable i : integer
+	loop
+		if i = length then
+			exit
+		endif
+		i := i + 1
+		lst := Lists.append(lst, Mathematics.randomInteger(0, 10))
+	endloop
+	IO.writeString(Strings.genericToString(lst) & "\n")
+	// IMPLEMENT YOU SOLUTION HERE
+	
+	// END OF THE IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_2" rows="33" cols="150" readonly style="display:none;">
+program filterList
+import IO
+import Lists
+import Mathematics 
+import Strings
+
+main	
+	variable liste : list<integer>
+	variable laenge : integer
+	laenge := 10
+	variable i : integer
+	loop
+		if i = laenge then
+			exit
+		endif
+		i := i + 1
+		liste := Lists.append(liste, Mathematics.randomInteger(0, 10))
+	endloop
+	IO.writeString(Strings.genericToString(liste) & "\n")
+	i := 0
+	loop
+		if (liste[i] mod 2) = 1 then
+			liste := Lists.removePosition(liste, i)
+		else 			
+			i := i + 1
+		endif
+		if i = Lists.lengthOf(liste) then
+			exit
+		endif
+	endloop
+	IO.writeString(Strings.genericToString(liste) & "\n")
+endmain
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="sort"><li>Sort List</h3>
+				<p>Your are given a list with 10 random generated numbers between 0 and 10.
+				<br>Your task is tothis list in ascending order and print the result.
+				<p>The result could look like that:
+				<p>				
+				<textarea rows="3" cols="150" readonly>
+[0, 2, 10, 4, 8, 9, 8, 9, 10, 9]
+[0, 2, 4, 8, 8, 9, 9, 9, 10, 10]
+				</textarea>		
+				<p><b>Hint:</b> you can compare pairs of neighbouring values and swap them if necessary (google: bubblesort).
+				<br>Alternatively, you can remove the smallest number from the original list and append it to a temporary list until the original list is empty.
+				<p>
+				<textarea rows="24" cols="150" readonly>
+program sortList
+import IO
+import Lists
+import Mathematics 
+import Strings
+
+main	
+	variable lst : list<integer>
+	variable length : integer
+	length := 10
+	variable i : integer
+	loop
+		if i = length then
+			exit
+		endif
+		i := i + 1
+		lst := Lists.append(lst, Mathematics.randomInteger(0, 10))
+	endloop
+	IO.writeString(Strings.genericToString(lst) & "\n")
+	// IMPLEMENT YOU SOLUTION HERE
+	
+	// END OF THE IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_3" onclick="toggleTextArea('ch1_sol_3', 'ch1_btn_3')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_3" rows="42" cols="150" readonly style="display:none;">
+program sortList
+import IO
+import Lists
+import Mathematics 
+import Strings
+
+main
+	variable liste : list<integer>
+	variable laenge : integer
+	laenge := 10
+	variable i : integer
+	loop
+		if i = laenge then
+			exit
+		endif
+		i := i + 1
+		liste := Lists.append(liste, Mathematics.randomInteger(0, 10))
+	endloop
+	IO.writeString(Strings.genericToString(liste) & "\n")
+	i := 0
+	loop
+		if i = laenge - 1 then
+			exit
+		endif
+		variable j : integer
+		loop
+			if j = laenge - 1 then
+				exit
+			endif
+			if liste[j] > liste[j + 1] then
+				variable temp : integer
+				temp := liste[j]
+				liste[j] := liste[j+1]
+				liste[j+1] := temp
+			endif
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop
+	IO.writeString(Strings.genericToString(liste) & "\n")
+endmain
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="chess"><li>Chessboard</h3>
+				<p>This task is the expansion of the chessboard example from chapter 3.
+				<ol>
+					<li>Declare an enueration <b>PieceType</b> with value literals: <b>PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING</b>.</li>
+					<li>Declare an enueration <b>Color</b> with value literals: <b>BLACK, WHITE</b>.</li>
+					<li>Declare a composition <b>Piece</b> which has a <b>pieceType</b> and a <b>color</b>.</li>
+					<li>Declare a composition <b>Field</b> which has a <b>color</b>, a <b>number</b>, a <b>character</b> and a <b>piece</b>.</li>
+					<li>In the main procedure, declare a <b>chessboard</b> as a two dimensional list of <b>Field</b>s.
+					<br>Initialize it as <b>[8 ** [8 ** Field{}]]</b>.</li>
+					<li>Iterate of this list, set the corresponding number and character coordinates as well as the correct color of each field.</li>
+					<li>Print your chessboard on the console.</li>
+				</ol>
+				<p>The resulting output should look like in the image below. 
+				<br>As you can see, a pawn is placed on every field, since it is a default value in this case.
+				<br>We will solve this issue in chapter 5.
+				<br><img src="../images/ch3_chess2.png" alt="">		
+				<p>
+				<button id="ch1_btn_4" onclick="toggleTextArea('ch1_sol_4', 'ch1_btn_4')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_4" rows="61" cols="150" readonly style="display:none;">
+program chessboardTask
+import Lists 
+import IO 
+import Strings 
+
+type PieceType : enumeration 
+	PAWN, ROOK, KNIGHT, BISHOP, QUEEN, KING
+endtype
+
+type Color : enumeration 
+	BLACK, WHITE
+endtype
+
+type Piece : composition 
+	attribute pieceType : PieceType
+	attribute color : Color
+ endtype
+ 
+type Field : composition 
+	attribute color : Color 
+	attribute number : integer
+	attribute character : string
+	attribute piece : Piece
+endtype
+
+main 
+	variable chessboard : list<list<Field>>
+	
+	chessboard := [8 ** [8 ** Field{}]]
+	
+	variable abc : list<string>
+	abc := ["a", "b", "c", "d", "e", "f", "g", "h"]
+	
+	variable i : integer
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		variable j : integer
+		loop
+			if j = Lists.lengthOf(chessboard) then exit endif			
+			chessboard[i][j].number := 8-i	
+			chessboard[i][j].character := abc[j]
+			if (i + j) mod 2 = 1 
+			then 
+				chessboard[i][j].color := Color.BLACK
+			
+			else 
+				chessboard[i][j].color := Color.WHITE				
+			endif			
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop		
+
+	i := 0
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		IO.writeString(Strings.genericToString(chessboard[i]) & "\n")
+		i := i + 1
+	endloop	
+endmain
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+		</ol>
+		<p><br>
 	</body>
 </html>
