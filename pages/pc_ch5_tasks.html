@@ -3,10 +3,77 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../css/style.css">		
+		<link rel="stylesheet" href="../css/style.css">	
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution";
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution";
+				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
+			}
+		</script>
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 5: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#swap">Swap Values with References</a></li>
+			<li><a href="#course">Course Management</a></li>
+		</ol>
+		
+		<ol>			
+			
+			<p><br>
+			<h3 id="swap"><li>wap Values with References</h3>
+				<p>
+				<p><img src="../images/wip.png" alt="">
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>				
+				<p>
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_1" rows="1" cols="150" readonly style="display:none;">
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>	
+			
+			<p><br>
+			<h3 id="course"><li>Course Management</h3>
+				<p>
+				<p><img src="../images/wip.png" alt="">
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>				
+				<p>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_2" rows="1" cols="150" readonly style="display:none;">
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+		</ol>
+		<p><br>
 	</body>
 </html>

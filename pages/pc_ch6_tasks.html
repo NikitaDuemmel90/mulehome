@@ -4,9 +4,93 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title></title>
 		<link rel="stylesheet" href="../css/style.css">		
+		
+		<script>
+			function toggleTextArea(textAreaID, btnID) {
+				var txt = document.getElementById(textAreaID);
+				var btn = document.getElementById(btnID);
+				if (txt.style.display === "none") {
+					txt.style.display = "block";
+					btn.innerHTML = "Hide solution";
+				} else {
+					txt.style.display = "none";
+					btn.innerHTML = "Show solution";
+				}
+				resizeFrame();
+			}
+			
+			function resizeFrame() {
+				var obj = document.parent;
+				console.log(obj === document)
+				console.log(obj)
+			}
+		</script>
 	</head>
 	
 	<body>	
-		<img src="../images/wip.png">
+		<p><br>
+		<h1 id="top">Chapter 6: Excercises</h1>		
+		<p>This page contains a set of excercises for the corresponding chapter.
+		<br>Read the task description, copy the code template if present and solve it in your Eclipse.
+		<br>If you are stuck, you can show the solution for this task. Be careful not to spoil the solution for yourself unnecessarily.
+		<h3 id="contents">Contents</h3>
+		<ol>
+			<li><a href="#fact">Factorial</a></li>
+			<li><a href="#palindromes">Palindromes</a></li>
+			<li><a href="#filter">Filter List</a></li>
+		</ol>
+		
+		<ol>			
+			
+			<p><br>
+			<h3 id="fact"><li>Factorial</h3>
+				<p>
+				<p><img src="../images/wip.png" alt="">
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>				
+				<p>
+				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>	
+			
+			<p><br>
+			<h3 id="palindromes"><li>Palindromes</h3>
+				<p>
+				<p><img src="../images/wip.png" alt="">
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>				
+				<p>
+				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+			<p><br>
+			<h3 id="filter"><li>Filter List</h3>
+				<p>
+				<p><img src="../images/wip.png" alt="">
+				<p>
+				<textarea rows="1" cols="150" readonly>
+				</textarea>				
+				<p>
+				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			
+		</ol>
+		<p><br>
 	</body>
 </html>
