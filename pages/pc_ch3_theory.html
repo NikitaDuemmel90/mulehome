@@ -16,8 +16,11 @@
 		<ol>
 			<li><a href="#enums">Enumerations</a></li>
 			<li><a href="#compositions">Compositions</a></li>
+			<li><a href="#exVehicles">Example: Vehicles</a></li>
 			<li><a href="#lists">Lists</a></li>
-			<li><a href="#lists2">Multi-dimensional Lists</a></li>
+			<li><a href="#listscs">Lists Cheat Sheet</a></li>
+			<li><a href="#lists2">Example: Lists with User Defined Types</a></li>
+			<li><a href="#lists3">Multi-dimensional Lists</a></li>
 		</ol>
 		
 		<ol>
@@ -25,7 +28,7 @@
 			<p><br>
 			<h3 id="lists"><li>Enumerations</h3>
 				<p>Let us first take a look at the picture below.
-				<br><img src="../images/ch3_rgb.png" width="360" height="360" alt="">
+				<br><img src="../images/ch3_rgb.png" width="300" height="300" alt="">
 				<p>We see the color representation of the RGB color system.
 				<br>In this system, we can code any color by combining three colors: red, green and blue.
 				<br>We will not go indepth just yet, for now we want to know how we would declare a <b>colorRGB</b> variable and assign it a simple value, either <b>red</b>, <b>green</b> or <b>blue</b>.
@@ -48,7 +51,7 @@ program enumerations1
 import IO
 import Strings
 
-type RGB : enumeration		// we define our own type, named RGB
+type RGB : enumeration		// we define our own enumeration type, named RGB
 	RED, GREEN, BLUE	// and specify its values
 endtype
 
@@ -102,36 +105,475 @@ endmain
 			
 			<p><br>
 			<h3 id="compositions"><li>Compositions</h3>
+				<p><img src="../images/Cartesian-coordinate-system.svg.png" width="300" height="300" alt="">
+				<p>Sometimes we have data, which is combined of several other pieces of information.
+				<br>For example, a point in a two dimensional coordinate system is a combination of two coordinates: <i>x</i> and <i>y</i>.
+				<br>Thus we have points like <i>p1(0, 0)</i> or <i>p2(2, 3)</i>.
+				
+				<p>When translating such information into a program, we could of course just use several variables:
 				<p>
+				<textarea rows="5" cols="150" readonly>
+variable p1_x : integer		p1_x := 0
+variable p1_y : integer		p1_y := 0
+variable p2_x : integer		p2_x := 2
+variable p2_y : integer		p2_y := 3
+				</textarea>
+				<p>However, as you can probably imagine, this will lead to a large amount of variables.
+				<br>Even more if we move into three dimensional space or to try to represent other entities, like cars or people, which may have a amount of different data.
+				<br>This solution is in the long run hard to maintain and prone to errors.
+				
+				<p>Instead, we can declare composition types, which allow us to sture data in a structured way.
+				<br>Therefore, a composition is a data structure.
+				<br>The example below shows how we can use compositions to define data composed of several values:
 				<p>
-				<textarea rows="1" cols="150" readonly>
+				<textarea rows="18" cols="150" readonly>
+program compositions1
+import IO
+import Strings
+
+type Point2D : composition 		// we define our own composition type, named Point2D
+	attribute x : integer		// as well as its attributes
+	attribute y : integer
+endtype
+
+main 
+	variable point2d : Point2D	// now we can declare a variable with this type
+	point2d.x := 2			// and set its attributes using their qualified names
+	point2d.y := 5
+	
+	IO.writeString(Strings.genericToString(point2d))
+	IO.writeLine()
+endmain				
+				</textarea>
+				<p>As we can see, we can declare a composition type which included several attributes.
+				<br>Attributes are in a sense similar to variables, i.e. they are named containers for values.
+				<br>The difference is that they are contained within a composition.
+				<br>Once we have declare a composition type, we can use it to declare variables.
+				<br>We can then access the attribues via the variable using their qualified names and set their values.
+				
+				<p>Let us expand this example a little:
+				<p>
+				<textarea rows="31" cols="150" readonly>
+program compositions2
+import IO
+import Strings
+
+type Point2D : composition 
+	attribute x : integer
+	attribute y : integer
+endtype
+
+type Point3D : composition 
+	attribute x : rational
+	attribute y : rational
+	attribute z : rational
+endtype
+
+main 
+	variable point2d : Point2D
+	point2d.x := 2
+	point2d.y := 5
+	
+	IO.writeString(Strings.genericToString(point2d))
+	IO.writeLine()
+	
+	variable point3d : Point3D
+	point3d.x := 3
+	point3d.y := 6 
+	point3d.z := 1
+	
+	IO.writeString(Strings.genericToString(point3d))
+endmain	
+				</textarea>
+				<p>We have added a second type called <b>Point3D</b>, which represents points in a three dimensional space.
+				<br>As we can see, both point types have x and y coordinates represented by the respective attributes.
+				<br>We don't have a naming conflict here, since these attributes exist in different namespaces.
+				
+				<p>Using the compositions we can now define our own data types which act as a structured combination of different values.
+				<br>In compositions, the stored values are accessed by their names.
+				<p>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="exVehicles"><li>Example: Vehicles</h3>
+				<p>Let us use a slightly different example.
+				<br>This time we want to specify wheeled vehicles, e.g. cars or trucks.
+				<br>We will keep our scenario simple, our vehicles will have a type, i.e. is it a car or a truck, a manufacturer, e.g. a BMW or Daimler, and a horsepower attribute.
+				<br>Meaning that our vehicles could be defined like this: <i>Vehicle{type, manufacturer, horsepower}</i>.
+				<p>We have a limited number of vehicle types and manufacturers, meaning that we could use enumerations to specify the respective values.
+				<br>As for horsepower, we can simply use integer.
+				<p>
+				<textarea rows="35" cols="150" readonly>
+program vehicles
+import IO
+import Strings
+
+type VehicleType : enumeration 
+	PKW, LKW
+endtype
+
+type Manufacturer : enumeration 
+	BMW, DAIMLER
+endtype
+
+type Vehicle : composition 
+	attribute vehicleType : VehicleType
+	attribute manufacturer : Manufacturer
+	attribute horsepower : integer
+endtype
+
+main 
+	variable bmw1 : Vehicle
+	variable actros : Vehicle
+	
+	bmw1.vehicleType := VehicleType.PKW
+	bmw1.manufacturer := Manufacturer.BMW
+	bmw1.horsepower := 134
+	IO.writeString(Strings.genericToString(bmw1))
+	IO.writeLine()
+	
+	actros.vehicleType := VehicleType.LKW
+	actros.manufacturer := Manufacturer.DAIMLER
+	actros.horsepower := 510
+	IO.writeString(Strings.genericToString(actros))
+	IO.writeLine()
+endmain
+				</textarea>
+				<p>The output of the program is:
+				<p>
+				<textarea rows="3" cols="150" readonly>
+Vehicle{vehicleType = PKW, manufacturer = BMW, horsepower = 134}
+Vehicle{vehicleType = LKW, manufacturer = DAIMLER, horsepower = 510}
 				</textarea>
 				<p>
-				<br><img src="../images/wip.png" alt="">
+				<p>In this example we have seen, how we can combine several user defined types to implement a slightly more complex scenario.
+				<p>Finally, we can use instead of setting attributes for composition variables in each separate line, we can use the standard notation for composition values:
+				<br><b>bmw1 := Vehicle{vehicleType = VehicleType.PKW, manufacturer = Manufacturer.BMW, horsepower = 134}</b>
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="lists"><li>Lists</h3>
+				<br><img src="../images/shopping_list.jpg" width="480" height="320" alt="">
+				<p>Most of us have some experience writing lists, be it shopping lists, todo lists, or somethin else.
+				<br>Therefore, we already have a slight conceptional understanding of what a list is.
+				<br>So, without further ado, let us implement a shopping list:
 				<p>
-				<p>
-				<textarea rows="1" cols="150" readonly>
+				<textarea rows="10" cols="150" readonly>
+program lists1
+import IO
+import Strings 
+
+main 
+	variable shoppingList : list<string>				// we declare a list of strings	
+	shoppingList := ["eggs", "milk", "apples", "bread"]		// meaning that we can only store string values in this list
+	IO.writeString(Strings.genericToString(shoppingList) & "\n")
+endmain
 				</textarea>
+				
+				<p>In programming, a list is a data structure meant to store data in a structured way.
+				<br>Unlike compositions, which are also data structures, lists do not allow to store values of different types in a single list.
+				<br>Meaning that we cannot store cars in our shopping list, only strings since we have declared it as a list of strings.
+				<br>However, the list itself is more flexible, as we can store as many values as we like, unlike in a composition, in which values are stored in predefined attributes. 
+				<p>List values can be accessed via their index, the first value has index 0, the last value has index <i>lengthOfList - 1</i>.
+				<p>As we have said, lists are quite flexible, especially when used with the <b>Lists</b> library.
+				<br>For example, the append operation creates a new list from a paramter list and an element.
+				<br>Basically it takes a list, appends and element to it and yields a new list as a result.
+				<br>The original list is not changed, i.e. we have to overwrite the original list if we want to keep one variable.
 				<p>
-				<br><img src="../images/wip.png" alt="">
+				<textarea rows="23" cols="150" readonly>
+program lists2
+import IO
+import Strings 
+import Lists	// Lists library contains a set of operations to be used with lists
+main 
+	variable shoppingList : list<string>				
+	shoppingList := ["eggs", "milk", "apples", "bread"]		
+		
+	IO.writeString(shoppingList[0] & "\n")		// eggs 
+	IO.writeString(shoppingList[2] & "\n")		// apples 	
+	
+	shoppingList[1] := "ham"			// replace the value at index 1 (milk) with a new value (ham)
+	IO.writeString(shoppingList[1] & "\n")		// ham
+	
+	IO.writeString(Strings.genericToString(shoppingList) & "\n") 	// [eggs, ham, apples, bread]
+	
+	shoppingList := Lists.append(shoppingList, "beer")		// we can append an element to a list
+	IO.writeString(Strings.genericToString(shoppingList) & "\n")	// [eggs, ham, apples, bread, beer]
+	
+	shoppingList := Lists.removeElement(shoppingList, "apples")	// we can remove elements from a list
+	IO.writeString(Strings.genericToString(shoppingList) & "\n")	// [eggs, ham, apples, bread]
+endmain
+				</textarea>
+				
+				<p>Loops and lists go hand in hand. 
+				<br>You will probably spend a lot of time iterating over collections, so let us demonstrate another example.
+				<br>Feel free to copy it into your eclipse, set up a breakpoint and iterate step by step to see what happens.
+				<p>
+				<textarea rows="25" cols="150" readonly>
+program lists3
+import IO
+import Strings 
+import Lists 
+
+main 
+	variable shoppingList : list<string>	
+	shoppingList := ["eggs", "milk", "apples", "bread"]
+
+	variable i : integer
+	loop					// this loop iterates over our list via the index i
+		if i >= Lists.lengthOf(shoppingList) then exit endif 
+		IO.writeInteger(i)
+		IO.writeString(": " & shoppingList[i] & "\n")
+		i := i + 1
+	endloop
+
+	loop					// this loop removes the first element from the list until it is empty
+		if Lists.lengthOf(shoppingList) = 0 then exit endif
+		shoppingList := Lists.removePosition(shoppingList, 0)  
+		IO.writeString(Strings.genericToString(shoppingList))
+		IO.writeLine()
+	endloop
+endmain
+				</textarea>
+				<p>The produced output is:
+				<p>
+				<textarea rows="9" cols="150" readonly>
+0: eggs
+1: milk
+2: apples
+3: bread
+[milk, apples, bread]
+[apples, bread]
+[bread]
+[]
+				</textarea>
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
-			<h3 id="lists2"><li>Multi-dimensional Lists</h3>
+			<h3 id="listscs"><li>Lists Cheat Sheet</h3>
+				<p>We know we may have just dropped quite a lot of information on your head.
+				<br>To better digest it, here is a short summary of what you can do with lists:
+				<ul>
+					<li>Declare a list variable: <b>variable lst : list&lt;string&gt;</b></li>
+					<li>Initialize a list: <b>lst : ["eggs", "milk", "apples", "bread"]</b></li>
+					<li>Initialize a list as a repetition of elements: <b>lst : [3 ** "eggs"]</b></li>
+					<li>Initialize a list as a range of integer: <b>lst : [1 .. 10]</b> (lst is a list&lt;integer&gt; this time)</li>
+					<li>Access an entry in a list: <b>IO.writeString(lst[0])</b></li>
+					<li>Replace an entry in a list: <b>lst[0] := "cheese"</b></li>
+					<li>Print the whole list: <b>IO.writeString(Strings.genericToString(lst))</b></li>
+				</ul>
+				<p>Additional functionality is offered by the <b>Lists</b> library.
+				<br>Here is only a small selection of operations:
+				<ul>
+					<li>Get the length of a list: <b>Lists.lengthOf(lst)</b></li>
+					<li>Append an element to a list: <b>lst := Lists.append(lst, "potatoes")</b></li>
+					<li>Remove an element from a list: <b>lst := Lists.removeElement(lst, "potatoes")</b></li>
+					<li>Insert an element at a position without overwriting anything: <b>lst := Lists.insert(lst, "potatoes", 1)</b></li>
+					<li>Remove an entry at a specific position: <b>lst := Lists.removePosition(lst, 2)</b></li>
+				</ul>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="lists2"><li>Example: Lists with User Defined Types</h3>
+				<p>Previously, we have demonstrated how we can combine enumerations and compositions in a single scenario.
+				<br>Same applies to our lists, since it is a generic type, we can declare lists of any other type, even user defined.
+				<p>In this scenario, we want to create a list of two dimensional points and then set their coordinates depending on their position in the list.
+				<br>Read the comments in the code, and of course run the program in you Eclipse.
 				<p>
-				<p>
-				<textarea rows="1" cols="150" readonly>
+				<textarea rows="26" cols="150" readonly>
+program listsWithCompositions
+import IO
+import Strings
+
+type Point2D : composition					// our user defined type
+	attribute x : integer
+	attribute y : integer
+endtype
+
+main
+	variable lst : list<Point2D>				// we declare a list of points, it is empty for now
+	IO.writeString(Strings.genericToString(lst) & "\n")	// []
+	
+	lst := [3 ** Point2D{x = 0, y = 0}]			// we initialize the list using the repetition and standard notation for compositions
+	IO.writeString(Strings.genericToString(lst) & "\n")	// [Point2D{x = 0, y = 0}, Point2D{x = 0, y = 0}, Point2D{x = 0, y = 0}]
+	
+	variable i : integer
+	loop							// we now iterate over the list
+		if i = 3 then exit endif
+		lst[i].x := i					// and set x and y depending on the current i
+		lst[i].y := i * 2
+		i := i + 1
+	endloop
+	IO.writeString(Strings.genericToString(lst) & "\n")	// [Point2D{x = 0, y = 0}, Point2D{x = 1, y = 2}, Point2D{x = 2, y = 4}]
+endmain
 				</textarea>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="lists3"><li>Multi-dimensional Lists</h3>
+				<p>As we have mentioned earlier, we can create lists of any other type.
+				<br>Since lists are also a type, we can create lists of lists, which leads us to multi-dimensional lists.
+				<br>Such data structures can be used to simulate tables or, for example, boardgames.
+				<br>In the following scenario, we will implement a chessboard, for now as a simple two dimensional list of strings.
+				<p><img src="../images/ch3_chess.png" width="480" height="283" alt="">
+				
+				<p>Let us start small by creating a two dimensional list of strings and printing it in a readable form:
 				<p>
-				<br><img src="../images/wip.png" alt="">
+				<textarea rows="20" cols="150" readonly>
+program chessboardExample
+import Lists 
+import IO 
+import Strings 
+
+main 
+	// list creation
+	variable chessboard : list<list<string>>	// declare a list of lists of strings
+	chessboard := [8 ** [8 ** "-"]]				// initialize the list as 8 lists each holding 8 times "-"
+		
+	// list output
+	// IO.writeString(Strings.genericToString(chessboard) & "\n") 		// this is not really readable, let us implement a better solution
+	variable i : integer
+	loop 													
+		if i = Lists.lengthOf(chessboard) then exit endif				// iterate over the outer list
+		IO.writeString(Strings.genericToString(chessboard[i]) & "\n")	// access the inner list via its index and print it
+		i := i + 1
+	endloop
+endmain
+				</textarea>
+				<p>This is the produced output so far:
+				<p>
+				<textarea rows="9" cols="150" readonly>
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+[-, -, -, -, -, -, -, -]
+				</textarea>
+				<p>If we look at our chessboard, we will see that each field has specific coordinates.
+				<br>We want to store these coordinates in the string entries of our implemented chessboard.
+				<br>Previously we have learned, that each entry in a list has an index at which it is located.
+				<br>Same applies to two-dimensional lists, however we need two indices to access the string entries 
+				<br>As an example, <b>chessboard[0][0]</b> will give us the upper left entry.
+				<p>Since we have 8 * 8 combinations of indices, or to put it simple, we need two loops to iterate over each entry in our 2d list.
+				<br>So let's do this and fill each entry with its actual coordinates:
+				<p>
+				<textarea rows="32" cols="150" readonly>
+program chessboardExample
+import Lists 
+import IO 
+import Strings 
+
+main 
+	// list creation
+	variable chessboard : list<list<string>>
+	chessboard := [8 ** [8 ** "-"]]
+		
+	// initializing our entries with their coordinates
+	variable i : integer		// i is the index of each inner list	
+	loop 				// the outer loop iterates over the outer list
+		if i = Lists.lengthOf(chessboard) then exit endif
+		variable j : integer	// j is the index of each entry in the inner list
+		loop			// the inner loop iterates over each inner list
+			if j = Lists.lengthOf(chessboard) then exit endif
+			// we access each entry using these two indices and store the index information in the entry as a string
+			chessboard[i][j] := Strings.integerToString(i) & "-" & Strings.integerToString(j)	
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop	
+		
+	// list output
+	i := 0
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		IO.writeString(Strings.genericToString(chessboard[i]) & "\n")
+		i := i + 1
+endmain
+				</textarea>				
+				<p>Our output has changed, we can clearly see the coordinates of each entry depending the values which we have calculated using two nested loops:
+				<p>
+				<textarea rows="9" cols="150" readonly>
+[0-0, 0-1, 0-2, 0-3, 0-4, 0-5, 0-6, 0-7]
+[1-0, 1-1, 1-2, 1-3, 1-4, 1-5, 1-6, 1-7]
+[2-0, 2-1, 2-2, 2-3, 2-4, 2-5, 2-6, 2-7]
+[3-0, 3-1, 3-2, 3-3, 3-4, 3-5, 3-6, 3-7]
+[4-0, 4-1, 4-2, 4-3, 4-4, 4-5, 4-6, 4-7]
+[5-0, 5-1, 5-2, 5-3, 5-4, 5-5, 5-6, 5-7]
+[6-0, 6-1, 6-2, 6-3, 6-4, 6-5, 6-6, 6-7]
+[7-0, 7-1, 7-2, 7-3, 7-4, 7-5, 7-6, 7-7]
+				</textarea>
+				<p>We are still a bit unhappy with the results, as we can see, the lower left field has the coordinate <i>7-0</i>.
+				<br>However, if we look at the image above, we can see that that particular field has the coordinate <i>1a</i>.
+				<br>We need to translate our logical coodrinates into chessboard coordinates.
+				<p>First, let us translate the logical i coordinate into chessboard number coordinate.
+				<br>As already said, 7 should be 1, meaning that 6 should be 2 and 0 should be 8. Can you recognize a pattern?
+				<br>8 - 7 = 1, 6 - 2 = 3, ..., 8 - 0 = 8, meaning that our chessboard number coordinate is <i>8 - indexOfInnerList</i> or <b>8 - i</b>.
+				<p>The chessboard character coordinate depends in the column, i.e. the <i>index of each entry in the inner list</i> or <i>j</i> in our case.
+				<br>We can define a list of strings filled witch characters <b>a</b> to <b>h</b> and get each character using <b>j</b> as index.
+				<textarea rows="37" cols="150" readonly>
+program chessboardExample
+import Lists 
+import IO 
+import Strings 
+
+main 
+	// list creation
+	variable chessboard : list<list<string>>
+	chessboard := [8 ** [8 ** "-"]]
+		
+	// list with characters
+	variable abc : list<string>
+	abc := ["a", "b", "c", "d", "e", "f", "g", "h"]
+	
+	// initializing our entries with chessboard coordinates
+	variable i : integer
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		variable j : integer
+		loop
+			if j = Lists.lengthOf(chessboard) then exit endif			
+			chessboard[i][j] := Strings.integerToString(8 - i) & abc[j]	// number coordinage = 8 - i, character coordinate = abc[j]
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop		
+	
+	// list output
+	i := 0
+	loop 
+		if i = Lists.lengthOf(chessboard) then exit endif
+		IO.writeString(Strings.genericToString(chessboard[i]) & "\n")
+		i := i + 1
+	endloop
+endmain
+				</textarea>
+				<p>As we can see, we now have the actual chessboard coordinates in our entries:
+				<p>
+				<textarea rows="9" cols="150" readonly>
+[8a, 8b, 8c, 8d, 8e, 8f, 8g, 8h]
+[7a, 7b, 7c, 7d, 7e, 7f, 7g, 7h]
+[6a, 6b, 6c, 6d, 6e, 6f, 6g, 6h]
+[5a, 5b, 5c, 5d, 5e, 5f, 5g, 5h]
+[4a, 4b, 4c, 4d, 4e, 4f, 4g, 4h]
+[3a, 3b, 3c, 3d, 3e, 3f, 3g, 3h]
+[2a, 2b, 2c, 2d, 2e, 2f, 2g, 2h]
+[1a, 1b, 1c, 1d, 1e, 1f, 1g, 1h]
+				</textarea>
+				<p>For now we are happy with the results, however, we will expand this example in the future.
+				<p>
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
