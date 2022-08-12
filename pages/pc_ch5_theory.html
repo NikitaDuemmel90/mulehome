@@ -22,6 +22,7 @@
 			<li><a href="#values">Values in the Memory</a></li>
 			<li><a href="#references">References</a></li>
 			<li><a href="#referencescs">References Cheat Sheet</a></li>
+			<li><a href="#cars">Scenario: Persons and Cars</a></li>
 			<li><a href="#oop">Object-oriented Programming</a></li>
 			<li><a href="#carsale">Scenario: Car Sale</a></li>
 			<li><a href="#access">Access Modifiers</a></li>
@@ -32,8 +33,14 @@
 		<ol>			
 			<p><br>
 			<h3 id="values"><li>Values in the Memory</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>What is actually happening in the memory when we use variables?
+				<br>In programming, we differentiate between two memory spaces: the stack and the heap.
+				
+				<p>Basically, every operation starting with the main procedure allocates memory on the stack for itself and its local variables.
+				<br>Each local variable has its own reserved memory storage.
+				<br>When we write <b>b := a</b>, the value stored in <b>a</b> is copied to the storage <b>b</b>.
+				<br>This is demonstrated in the image below.
+				<p><img src="../images/ch5_memo.png" alt="">
 				
 				<p><a href="#top">Back to top</a>
 			</li>
@@ -41,54 +48,254 @@
 			
 			<p><br>
 			<h3 id="references"><li>References</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>If we want to manage same storage room using different variables, for example from within different operations, we have to use references.
+				<br>A reference is in MuLE a generic type, which allows us to create references to values of any other type.
+				<br>The referenced value is stored under a specific address on the heap, the other part of the internal memory.
+				<br>The value of the reference variable is the address to the referenced value.
+				<br>This way, we can access the same storage room via different variables, parameters or attributes.
+				<br>The standard value of a reference variable is <b>null</b>, i.e. a reference to nothing.
 				
+				<p>To wrap a value in a reference, we have to write <b>reference VALUE</b>.
+				<br>To unwrap the referenced value, we have to dereference a variable using the operator <b>@</b>
+				<p><img src="../images/ch5_memo2.png" alt="">
+				<p>Copy the code below in your Eclipse and place a breakpoint at the beginning of the program.
+				<br>Execute the program step by step using the debugger and monitor how the values of the variables behave.
+				<p>
+				<textarea rows="41" cols="150" readonly>
+program valuesAndReferences
+import IO
+import Strings
+
+main
+	// Values
+	variable a : integer
+	variable b : integer
+	IO.writeString("a = ") IO.writeInteger(a) IO.writeLine()
+	IO.writeString("b = ") IO.writeInteger(b) IO.writeLine()
+	
+	a := 42
+	b := a
+	IO.writeString("a = ") IO.writeInteger(a) IO.writeLine()
+	IO.writeString("b = ") IO.writeInteger(b) IO.writeLine()
+	
+	a := 5
+	IO.writeString("a = ") IO.writeInteger(a) IO.writeLine()
+	IO.writeString("b = ") IO.writeInteger(b) IO.writeLine()
+	
+	// Referemces
+	variable aRef : reference<integer>
+	variable bRef : reference<integer>
+	IO.writeString("aRef = " & Strings.genericToString(aRef) & "\n") 
+	IO.writeString("bRef = " & Strings.genericToString(bRef) & "\n") 
+	
+	aRef := reference 42
+	bRef := aRef
+	IO.writeString("aRef = " & Strings.genericToString(aRef) & ", Value of aRef = " & Strings.integerToString(aRef@) & "\n") 
+	IO.writeString("bRef = " & Strings.genericToString(bRef) & ", Value of bRef = " & Strings.integerToString(bRef@) & "\n") 
+	
+	aRef@ := 5
+	IO.writeString("aRef = " & Strings.genericToString(aRef) & ", Value of aRef = " & Strings.integerToString(aRef@) & "\n") 
+	IO.writeString("bRef = " & Strings.genericToString(bRef) & ", Value of bRef = " & Strings.integerToString(bRef@) & "\n") 
+	
+	aRef := null
+	if aRef /= null then
+		IO.writeString(Strings.integerToString(aRef@)) 
+	endif
+endmain
+				</textarea>	
+				<p>Now let us go back to our chess problem and fix it:
+				<p>
+				<textarea rows="7" cols="150" readonly>
+type Field : composition 
+	attribute color : Color 
+	attribute number : integer
+	attribute character : string
+	attribute piece : reference<Piece>
+endtype
+				</textarea>	
+				<p>All we needed to do was to change the type of the attribute <b>piece</b> from <b>Piece</b> to <b>reference&lt;Piece&gt;</b>.
+				<br>As a result, we no longer have any chess pieces on our chess board as we can see in the image below.
+				<p><img src="../images/ch5_chess2.png" alt="">
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="referencescs"><li>References Cheat Sheet</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Here is a small cheat sheet of what you need to do when working with references:
+				<ul>
+					<li>Declare a reference variable: <b>variable aRef : reference&lt;integer&gt;</b></li>
+					<li>Store a value on the heap and save its address in a variable: <b>aRef := reference 42</b></li>
+					<li>Dereference the variable to access the referenced value: <b>IO.writeInteger(aRef@)</b></li>
+					<li>Dereference the variable to change the referenced value: <b>aRef@ := 5</b></li>
+					<li>Set a null-reference: <b>aRef := null</b></li>
+					<li>Checking for null-reference: <b>if aRef /= null then IO.writeInteger(aRef@) endif</b></li>
+				</ul>
+				<p>Checking for null-references is important.
+				<br>If you attempt to dereference a null-reference you will get a runtime error, i.e. your program will crash.
 				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="cars"><li>Scenario: Persons and Cars</h3>
+				<p>Let us take a look at the following scenario:
+				<p><img src="../images/ch5_cars1.png" alt="">
+				<p><br> 
+				<p>We have two groups of entities: persons and cars.
+				<br>And as we can see, we have both data related directly to these entities as well as actions that can be performed with them.
+				<p><img src="../images/ch5_cars3.png" alt="">
+				<p><br> 
+				<p>Let us try to implement at least a part of this scenario related to the <b>Car</b> entity using the concepts that we have learned so far:
+				<p><img src="../images/ch5_cars2.png" alt="">
+				<p><br>
+				<p>As we can see, we have a composition called <b>Car</b> containing all the data and two separate operations that accept a <b>Car</b> as a parameter.
+				<br>Clearly, both operations cannot exist without the <b>Car</b> type, yet they are still separated from it within our code.
+				<br>Furthermore, it can get quite chaotic if we start implementing further entities, e.g. our <b>Person</b> which can also drive.
+				<p>So the question is, can we merge both data and actions related to each other into a single entity?
+				<br>And the answer to this question is <i>object-oriented programming</i>.
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="oop"><li>Object-oriented Programming</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
-				
+				<p>The core idea of object-oriented programming is to combine semantically related data and operations in one entity.
+				<br>These entities, called objects, have specific attributes, like for example the mileage of our car, and can perform operations by themselves.
+				<br>For example our car can drive, that means that we can invoke a <b>drive</b> operation directly on a <b>car</b> instead of calling a separate drive operation and pass a car as a parameter.
+				<p><img src="../images/ch5_oop1.png" alt="">
+				<p>There is a lot more to the concept of object-oriented programming, which we will cover shortly.
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="carsale"><li>Scenario: Car Sale</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Continuing our Persons and Cars scenario, we want to actually sell a car now.
+				<br>Or at least transfer it from one person to another.
+				<p><img src="../images/ch5_cars4.png" alt="">
+				<p><br>
+				<p>The arrows in the image above are not just for show.
+				<br>Remember how at the beginning of this chapter we were talking about values and references?
+				<br>If we would use value types, first every Person would automatically have a car in our scenario.
+				<br>Second, if a person would sell a car to another person, the value of the car would be copied.
+				<br>Meaning we would sell a copy of our car while keeping the original and get the money, sounds great right?
 				
+				<p>Sadly, our scenarios should represent the real world, so we have to rely heavily on reference types when writing object-oriented programs.
+				
+				<p>Our main actors are still persons, so to finish our scenario we have to implement our <b>Person</b>:
+				<p><img src="../images/ch5_cars5.png" alt="">
+				
+				<p>Now that we have everything ready, let us test this scenario:
+				<p><img src="../images/ch5_cars6.png" alt="">
+				
+				<p>Your will find the entire code below:
+				<p>
+				<textarea rows="70" cols="150" readonly>
+program carsAndPersons
+import IO
+import Strings
+
+type Person : composition
+	attribute name : string
+	attribute myCar : reference<Car>
+	
+	operation drive(parameter distance : integer) 
+		if myCar = null then
+			IO.writeString(name & " does not own a car.\n")
+		else
+			IO.writeString(name & " drives " & Strings.integerToString(distance) & "km.\n")
+			myCar@.drive(distance)
+		endif
+	endoperation
+	
+	operation sell(parameter newOwner : reference<Person>)
+		if newOwner /= null then
+			newOwner@.myCar := myCar
+			myCar := null
+		endif
+	endoperation
+endtype
+
+
+type Car : composition
+	attribute manufacturer : string
+	attribute mileage : integer
+	
+	operation drive(parameter distance : integer)
+		mileage := mileage + distance
+	endoperation
+	
+	operation readData()
+		IO.writeString(manufacturer)	
+		IO.writeLine()
+		IO.writeString("Mileage: ")	
+		IO.writeInteger(mileage) 
+		IO.writeLine()
+	endoperation
+endtype
+
+main	
+	variable car : reference<Car>
+	car := reference Car{manufacturer = "BMW", mileage = 0}
+
+	variable alice : reference<Person>
+	alice := reference Person{name = "Alice", myCar = null}
+	
+	variable bob : reference<Person>
+	bob := reference Person{name = "Bob", myCar = car}
+	
+	bob@.myCar@.readData()
+	IO.writeLine()
+	
+	bob@.drive(100)
+	bob@.myCar@.readData()
+	IO.writeLine()
+	
+	bob@.sell(alice)
+	bob@.drive(100)
+	IO.writeLine()
+	
+	alice@.myCar@.readData()
+	alice@.drive(100)
+	alice@.myCar@.readData()
+	IO.writeLine()
+endmain
+				</textarea>	
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="access"><li>Access Modifiers</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p><img src="../images/ch5_cars7.png" alt="">
+				<p>As we can see, currently we can access the attributes of our object directly, which can lead to a following scenario:
+				<br><i>Bob manipulates the mileage of his car before selling to Alice to get a higher price.</i>
+				<br>This kind of a situation should be avoided. Our goal is to somehow restrict the accessibility of attributes.
 				
+				<p><img src="../images/ch5_cars8.png" alt="">
+				
+				<p>In MuLE, by default, all attributes and operations in compositions are visible from the outside.
+				<br>This way, we can freely access their values and change them, meaning we have reading and writing access to them.
+				<p>To restrict this, we can use visibility modifiers, e.g. <b>private</b> which restricts the visibility only to the containing composition.
+				<br>We can access a private attribute only within the same composition, e.g. in the operations <b>drive</b> and <b>readData</b>.
+				<br>In a sense, the operation <b>readData</b> provides us reading access to these attributes.
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="inheritance"><li>Inheritance</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Let us take a look at the scenario in the image below:
+				<p><img src="../images/ch5_inh1.png" alt="">
+				<p>Here we have three different yet related groups of entities: cars, busses and trucks.
+				<br>All of these entities have a lot in common, they are all vehicles, meaning that right now we have a lot of redundancy.
+				<br>But they their own specific features, so we cannot just simply define all of them in a single class. 
+				<br>We would end up with unnecessary attributes for specifiy vehicle types.
 				
+				<p>This is where the concept of inheritance comes into place:
+				<p><img src="../images/ch5_inh2.png" alt="">
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
