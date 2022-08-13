@@ -9,49 +9,269 @@
 	<body>	
 		<p><br>
 		<h1 id="top">Chapter 6: Recursion and Functional Programming</h1>	
-		<p>
+		<p>Welcome to the final chapter of this course.
+		<br>The main topics are recursion, which is another form of repetition and functional programming, which relies heahily on recursion and lambda calculus.
 		<h3 id="contents">Contents</h3>
 		<ol>
 			<li><a href="#recursion">Recursion</a></li>
+			<li><a href="#recursion2">Implementing Recursion</a></li>
 			<li><a href="#loopsRec">Translating Loops into Recursion</a></li>
 			<li><a href="#recursiveds">Recursive Data Structures</a></li>
 			<li><a href="#lambda">Lambda Calculus</a></li>
 			<li><a href="#funpro">Functional Programming</a></li>
-			<li><a href="#high">Higher Order Functions</a></li>
+			<li><a href="#calc">Scenario: Functional Calculator</a></li>
+			<li><a href="#funpro2">Functional Programming: Practical Application</a></li>
 		</ol>
 		
 		<ol>
 			<p><br>
 			<h3 id="recursion"><li>Recursion</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Recursion is the natural way of repetition.
+				<br>We can often observe recurring patterns in nature, where the next iteration looks like a smaller or larger version of the previous iteration.
+				<p><img src="../images/ch6_recursion.png" alt="">
+				<p><br>
+				<p>This concept is also used to define repetition in mathematics.
+				<br>The Fibonacci numbers are just one famous example, which can also be observed in nature, e.g. sunflowers display fibonacci spirals in the arrangement of their seed.
+				<p>The definition of Fibonacci numbers is:
+				<br>&emsp;<i>F<sub>0</sub> = 0</i>
+				<br>&emsp;<i>F<sub>1</sub> = 1</i>
+				<br>&emsp;<i>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n - 2</sub></i>
 				
+				<p>Basically if we want to compute the sixth fibonacci number, i.e. F<sub>6</sub>, we first have to compute F<sub>5</sub> + F<sub>4</sub>.
+				<br>&emsp;<i>F<sub>0</sub> = 0</i>
+				<br>&emsp;<i>F<sub>1</sub> = 1</i>
+				<br>&emsp;<i>F<sub>2</sub> = F<sub>1</sub> + F<sub>0</sub> = 1 + 0 = 1</i>
+				<br>&emsp;<i>F<sub>3</sub> = F<sub>2</sub> + F<sub>1</sub> = 1 + 1 = 2</i>
+				<br>&emsp;<i>F<sub>4</sub> = F<sub>3</sub> + F<sub>2</sub> = 2 + 1 = 3</i>
+				<br>&emsp;<i>F<sub>5</sub> = F<sub>4</sub> + F<sub>3</sub> = 3 + 2 = 5</i>
+				<br>&emsp;<i>F<sub>6</sub> = F<sub>5</sub> + F<sub>4</sub> = 5 + 3 = 8</i>
+				<br>&emsp;...
+				<br>&emsp;which leads us again to:
+				<br>&emsp;<i>F<sub>n</sub> = F<sub>n-1</sub> + F<sub>n - 2</sub></i>
+				
+				<p>So what is reqursion?
+				<br>To quote Stephen Hawking: <i>"To understand recursion, one must first understand recursion."</i>
+				<p><b>Recursive constructs are those, that define themselves.</b>
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="recursion2"><li>Implementing Recursion</h3>
+				<p>Remeber how we talked about defining the termination condition for our loops?
+				<br>Without them, we would have endless loops which would lead to incorrectly working programs.				
+				<br>Same applies to recursion, however, instead of loops we have to use other means to achieve repetition.
+				<br>Nevertheless, we still have to think about when the repetition stops, otherwise we get endless recursion.
+				
+				<p>The first and the more simpler approach to achieve recursion is by using operations: i.e. our functions and procedures.
+				<br>Since we have already defined the Fibonacci number function, let us implement it following these simple steps:
+				<p><img src="../images/ch6_fib.png" alt="">
+				<p>We have basically translated the mathematical function into our program word for word.
+				<br>It should be noted, that this is not the most optimized solution, far from it, but it is enough in the context of our beginner programming course.
+				
+				<p><textarea rows="26" cols="150" readonly>
+program fibonacciNumbers
+import IO
+
+operation fib(parameter n : integer) : integer
+	if n = 0 then
+		return 0		// fib(0) = 0
+	endif
+	if n = 1 then
+		return 1		// fib(1) = 1
+	endif
+	return fib(n - 1) + fib(n - 2)	// fib(n) = fib(n-1) + fib(n-2) <-> recursive call 
+endoperation
+
+main
+	variable x : integer
+	x := 0
+	loop
+		if x > 5 then
+			exit
+		endif
+		IO.writeInteger(fib(x))
+		IO.writeLine()
+		x := x + 1
+	endloop
+endmain
+				</textarea>		
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="loopsRec"><li>Translating Loops into Recursion</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Any repetitive algorithm can be represented either via a loop or via recursion.
+				<br>Sometimes one approach can produce a more optimal solution or more elegant code that the other.
 				
+				<p>In order to translate a loop into a recursion we have to remember one thing:
+				<br>Anything that is changed inside of a loop and controls its execution must be passed as a parameter for our recursive operation.
+				<br>If we simply change it in the operation and not pass it, the next iteration of our operation will now know of these changes.
+				
+				<p>Let us demonstrate it in the next example:
+				<p><img src="../images/ch6_looprec.png" alt="">
+				<p>The operation <b>usingLoop(n : integer)</b> draws a polygon depending on the parameter <b>n</b>.
+				<br>We use a loop which is terminated once the counter variable <b>i</b> reaches <b>n</b>, the value of <b>i</b> is changed locally within the loop.
+				<br>Same algorithm is implemented in the recursive operation <b>usingRecursion(n : integer, i : integer)</b>.
+				<br>However, as you can see, we now have an additional parameter <b>i</b>, which has the same function as <b>i</b> in <b>usingLoop(n : integer)</b>.
+				<br>If <b>i</b> equals <b>n</b> we return from our operation terminating the recursion. 
+				<br>If not, we invoke <b>usingRecursion(n : integer, i : integer)</b> again, but with an incremented value of <b>i</b>.
+				
+				<p>The code below contains an additional operation <b>interfaceForUsingRecursion(n : integer)</b>.
+				<br>The task of this operation is to hide the parameter <b>i</b> from the user, after all it should start with a 0 anyway.
+				<p><textarea rows="37" cols="150" readonly>
+program loopsAndRecursion
+import IO
+import Turtle
+
+operation usingLoop(parameter n : integer)	// our old solution using a loop
+	variable i : integer			// we use a variable to determine the termination condition
+	loop
+		if i = n then exit endif	// i = n <-> all edges are drawn
+		i := i + 1			// i is increased in the loop
+		Turtle.forward(100)
+		Turtle.left(360/n)
+	endloop
+endoperation
+
+operation interfaceForUsingRecursion(parameter n : integer)	// hides the parameter i from the user
+	usingRecursion(n, 0)			// invokes the actual recursive operation with correct parameters
+endoperation
+
+operation usingRecursion(parameter n : integer, parameter i : integer) // same algorithm, i is a parameter this time
+	if i = n then 				// i = n <-> all edges are drawn
+		return 
+	endif
+	Turtle.forward(100)
+	Turtle.left(360/n)
+	usingRecursion(n, i + 1)		// i is not changed locally, the next value is passed as a parameter depending on i
+endoperation
+
+main
+	Turtle.setThickness(2)
+	Turtle.setPosition(150, 300)
+	usingLoop(4)
+	Turtle.setPosition(350, 300)
+	usingRecursion(4, 0)			// we pass a 0 as the initial value of i
+	Turtle.setPosition(550, 300)
+	interfaceForUsingRecursion(4)		// we don't need to pass the initial value of i
+endmain
+				</textarea>	
+				<p>Go ahead and try this example in your Eclipse, the produced output should look like this:
+				<p><img src="../images/ch6_looprec2.png" alt="">
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="recursiveds"><li>Recursive Data Structures</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Data types can also be defined in a recursive way, usually when implementing data structures.
+				<br>A recursive type is one that references itself, for example we can define a <b>List</b> type which references other <b>List</b>s.
+				<br>Other data structures such as trees are usually defined in a similar way.
+				<p><img src="../images/ch6_list1.png" alt="">
 				
+				<p>Since we have a recursively defines data structure, it is actually very easy to define recursive operations to work with such types.
+				<br>For example, if we want to append a value at the end of the list, we simply have to find that end first.
+				<br>We have found the end when the tail reference is null, in which case we create a new tail list, otherwise we search in our current tail.
+				<p><img src="../images/ch6_list2.png" alt="">
+				<p>By no means does that mean, that we only can implement recursive operation with recursive data structures.
+				<br>The code below demonstrates both recursive and non-recursive operations with the same semantics.
+				<br>Try it out, you will see that both versions produce the same results, however, the recursive implementation tends to be more elegant.
+				<p><textarea rows="77" cols="150" readonly>
+program recursiveList
+import IO
+
+type List : composition				// our own implementation of a list data structure
+	attribute head : integer		// which stores integer values, the head of a list is the stored value
+	attribute tail : reference<List>	// the tail of the list is a reference to another list
+	// meaning, that either there is another list with its own head and tail, or there is a null-reference signalling the end of the entire list
+	
+	operation append(parameter x : integer)
+		if tail = null then		// if there is no tail, meaning we are at an end
+			tail := reference List{head = x, tail = null}	// create and append a new list with the new value
+		else
+			tail@.append(x)		// otherwise, search in the tail and append it there
+		endif
+	endoperation
+	
+	operation appendWithoutRecursion(parameter x : integer)
+		if tail = null then 
+			tail := reference List{head = x, tail = null}
+		else 		
+			variable current : reference<List>
+			current := tail
+			loop
+				if current@.tail = null then
+					current@.tail := reference List{head = x, tail = null}
+					return
+				else 
+					current := current@.tail
+				endif
+			endloop
+		endif 
+	endoperation
+	
+	operation print()
+		IO.writeInteger(head) 		// print the stored value
+		if tail /= null then		// if there is a tail
+			IO.writeString(", ") 
+			tail@.print()		// print the tail
+		endif
+	endoperation	
+	
+	operation printWithoutRecursion()
+		IO.writeInteger(head) 	
+		variable current : reference<List>
+		current := tail
+		loop
+			if current /= null then		
+				IO.writeString(", ") 
+				IO.writeInteger(current@.head) 		
+				current := current@.tail	
+			else 
+				return	
+			endif
+		endloop
+	endoperation	
+endtype
+
+main
+	variable lst1 : List
+	lst1 := List{head = 1, tail = null}
+	lst1.print()	
+	IO.writeLine()
+	lst1.append(2)
+	lst1.append(3)
+	lst1.append(4)
+	lst1.print()
+	IO.writeLine()
+	variable lst2 : List
+	lst2 := List{head = 5, tail = null}
+	lst2.print()	
+	IO.writeLine()
+	lst2.appendWithoutRecursion(6)
+	lst2.appendWithoutRecursion(7)
+	lst2.appendWithoutRecursion(8)
+	lst2.printWithoutRecursion()
+endmain
+				</textarea>	
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
 			<h3 id="lambda"><li>Lambda Calculus</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>Slowly we have reached the final topic of our programming course, the functional programming.
+				<br>This programming paradigm was a parallel development to the imperative programming, which has led to procedural and object-oriented programming.
+				<br>You will notice, that functional programming is quite different to what we were doint in the previous chapters.
+				
+				<p>The keystone of functional programming is lanbda calculus, wherin the intention is to be able to represent any mathematical expression as a function.
+				<br>Functions are nothing new to us, we have already translated mathematical functions into code in chapter 4.
+				<br>However, if we want wrap every expression into functions, we might end up with a lot of named functions that we may use only once.
+				<br>If we introduce anonymous functions instead, we no longer need to find a name for a function that we need only once.
+				
+				<p><img src="../images/ch6_lambda.png" alt="">
 				
 				<p><a href="#top">Back to top</a>
 			</li>
@@ -59,18 +279,199 @@
 			
 			<p><br>
 			<h3 id="funpro"><li>Functional Programming</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
+				<p>As entioned, lambda calculus is the keystone of functional programming, meaning that we often use lambda expression to pass around functionality.
+				<br>Other than that, loops and state changes are frowned upon in functional programming, many pure functional languages lack loops and assignemt statements.
+				<br>Instead we have to rely on recursion and constant values.
+				<p><img src="../images/ch6_lambda2.png" alt="">
 				
+				<p><br>
+				<h4>Operations as data and operation data type</h4>
+				<p>Oh and have we mentioned that we can pass functionality around as data? 
+				<br>We can do that in functional programming, our operations can be stored in variables, parameters and attributes as data.
+				<br>Yes, functionality can be data too.
+				<p>
+				<br>The variables and other data containers must have a corresponding operation type as their data type to be able to do that.
+				<br>If we want to return an operation, the return type must be an operation type.
+				
+				<p><img src="../images/ch6_optype.png" alt="">
+				
+				<p><br>
+				<h4>Lambda expressions in action</h4>
+				<p>Copy and paste the code below into your Eclipse, execute your program step by step to get a better feeling for lambda expressions.
+				<p><textarea rows="57" cols="150" readonly>
+program lambdaExpressions
+import IO
+
+// our usual function f(x) = 2 * x
+operation f(parameter x : integer) : integer	
+	return 2 * x
+endoperation
+
+main
+	// we invoke f(3)
+	IO.writeString("f(3) = ") IO.writeInteger(f(3)) IO.writeLine()		
+	
+	// we declare a variable g which is an operation which accepts an integer and returns an integer
+	variable g : operation(integer) : integer	
+	// we store the operation f in g
+	g := f										
+	// we can now invoke g, it has the same functionality as f
+	IO.writeString("g(3) = f(3) = ") IO.writeInteger(g(3)) IO.writeLine()		
+	
+	// we now define g using an anonymous function
+	// which at the moment still has the same functionality as f, i.e. x -> 2 * x
+	g := operation(parameter x : integer) : integer	
+		return 2 * x								
+	endoperation									
+	IO.writeString("g(3) = x -> 2 * x = ") IO.writeInteger(g(3)) IO.writeLine()
+	
+	// now we redefine g with a new lambda expression
+	// its functionality has changed: x -> x * x
+	g := operation(parameter x : integer) : integer	
+		return x * x								
+	endoperation									
+	IO.writeString("g(3) = x -> x * x = ") IO.writeInteger(g(3)) IO.writeLine()
+		
+	// sum is a function, which accepts an integer and returns another function, which accepts an integer and return an integer
+	// y -> x -> y + x
+	variable sum : operation(integer) : operation(integer) : integer	
+	sum := operation(parameter y : integer) : operation(integer) : integer	
+		return operation(parameter x : integer) : integer
+			return y + x
+		endoperation
+	endoperation
+	// since sum(3) returns another function, we have to pass another parameter
+	IO.writeString("sum(3)(2) = y -> x -> y + x = ") IO.writeInteger(sum(3)(2)) IO.writeLine()	
+	
+	// y -> x -> y(x)
+	variable yAppliedToX : operation(operation(integer) : integer) : operation(integer) : integer	
+	yAppliedToX := operation(parameter y : operation(integer) : integer) : operation(integer) : integer	
+		return operation(parameter x : integer) : integer
+			return y(x)
+		endoperation
+	endoperation
+	// the current value of f is x -> 2 * x
+	IO.writeString("yAppliedToX(f)(4) = y -> x -> y(x) = f(4) ") IO.writeInteger(yAppliedToX(f)(4)) IO.writeLine()		
+	// the current value of g is x -> x * x
+	IO.writeString("yAppliedToX(g)(4) = y -> x -> y(x) = g(4) ") IO.writeInteger(yAppliedToX(g)(4)) IO.writeLine()		
+endmain
+				</textarea>	
+				
+				<p><br>
+				<h4>Higher order functions</h4>
+				<p>In the code example above the functions <b>f</b> and <b>g</b> accept and return simple integer values.
+				<br>Such functions, which do not accept or return other functions are called <i>first order functions</i>.
+				<p>On the other hand, the function <b>sum</b> returns another function, while <b>yAppliedToX</b> accepts and returns functions.
+				<br>Such functions are called <i>higher order functions</i>.
+				<p><img src="../images/ch6_higherorder.png" alt="">
+				<p>MuLE has a very explicit syntax, most functional and multi-paradigm languages have a far shorter notation for lambda expressions compared to MuLE.
+				<p><img src="../images/ch6_higherorder2.png" alt="">
+				<p>This approach, wherein we pass a single parameter to a function and need to return another function in order to pass additional parameters is called <i>currying</i>.
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
 			
 			<p><br>
-			<h3 id="high"><li>Higher Order Functions</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
-				
+			<h3 id="calc"><li>Scenario: Functional Calculator</h3>
+				<p>We want to implement a simple calculator function, which accepts two values as well as another function which is then applied to these values.
+				<br>The passed function represent an arithmetical operator and therefore is imperative for the outcome.
+				<p>We also need another operation, which proved us with a mathematical function depending on a mathematical symbol.
+				<br>Meaning that if we pass a "+", we get the function which adds two values.
+				<p><img src="../images/ch6_higherorder3.png" alt="">
+				<p><textarea rows="38" cols="150" readonly>
+program functionalCalculator 
+import IO 
+
+main	
+	variable f : operation(rational, rational, operation(rational, rational) : rational) : rational 	
+	f := operation(parameter x : rational, parameter y : rational, parameter g : operation(rational, rational) : rational) : rational
+		return g(x, y) 
+	endoperation
+	
+	
+	variable provider : operation(string) : operation(rational, rational) : rational
+	provider := operation(parameter symbol : string) : operation(rational, rational) : rational
+		if symbol = "+" then 
+			return operation(parameter x : rational, parameter y : rational) : rational
+				return x + y
+			endoperation
+		elseif symbol = "-" then 
+			return operation(parameter x : rational, parameter y : rational) : rational
+				return x - y
+			endoperation
+		elseif symbol = "/" then 
+			return operation(parameter x : rational, parameter y : rational) : rational
+				return x / y
+			endoperation
+		else 
+			return operation(parameter x : rational, parameter y : rational) : rational
+				return x * y
+			endoperation
+		endif  
+	endoperation
+	
+	IO.writeString("5.0 + 2.0 = ")	IO.writeRational(f(5.0, 2.0, provider("+")))	IO.writeLine()
+	IO.writeString("5.0 - 2.0 = ")	IO.writeRational(f(5.0, 2.0, provider("-")))	IO.writeLine() 
+	IO.writeString("5.0 * 2.0 = ")	IO.writeRational(f(5.0, 2.0, provider("*")))	IO.writeLine()
+	IO.writeString("5.0 / 2.0 = ")	IO.writeRational(f(5.0, 2.0, provider("/")))	IO.writeLine()
+	IO.writeString("5.0 / 2.0 + 2.5 = ")	IO.writeRational(f(f(5.0, 2.0, provider("/")), 1.5, provider("+")))	IO.writeLine()
+endmain
+				</textarea>	
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="funpro2"><li>Functional Programming: Practical Application</h3>
+				<p>By now we have discussed everything that there is to functional programming, at least in MuLE.
+				<br>But we are pretty sure, you are still wondering, why? Why do we need to do it this way?
+				<br>After all, procedural programming is great when translating algorithms, object-oriented programming is awesome when we need to represent a real world scenario.
+				<br>We can translate mathematical functions using operations with return values, why ddo we need lambda expressions?
+				<p>So why do we need them.
+				<br>To put it short, it allows us to create operations which can change their behaviour depending on the passed lambda expression.
+				<br>For example, have a list of integers and we want to apply different operations to these values.
+				<br>We can implement a <b>forEach</b> operation which accepts a list of integers and an operation which also accepts an integer.
+				<br>This operation is then applied to every integer in the list.
+				<br>This way we can apply different operations to the values in the list.
+				<p><textarea rows="38" cols="150" readonly>
+program forEach
+import IO
+import Lists
+import Strings    
+
+operation forEach(parameter l : list<integer>, parameter f : operation(integer)) 	
+	forEachImplementation(l, f, 0)
+endoperation
+
+operation forEachImplementation(parameter l : list<integer>, parameter f : operation(integer), parameter i : integer) 
+	if i = Lists.lengthOf(l) then 
+		return 
+	endif     
+	f(l[i])
+	forEachImplementation(l, f, i + 1)
+endoperation
+
+
+main
+	// custom forEach test
+	variable l : list<integer>
+	l := [1 .. 4] 
+	
+	forEach(l, operation(parameter x : integer) 
+			IO.writeInteger(x) 
+			IO.writeString(" ")
+		endoperation
+	)
+	IO.writeLine()
+	
+	forEach(l, operation(parameter x : integer) 
+			IO.writeInteger(x * x) 
+			IO.writeString(" ")
+		endoperation
+	)
+	IO.writeLine() 
+endmain
+				</textarea>	
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>

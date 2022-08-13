@@ -41,6 +41,9 @@
 			<li><a href="#numGuess">Number Guessing Game</a></li>
 			<li><a href="#polygon">Regular Polygon</a></li>
 			<li><a href="#stair">Turtle Stair</a></li>
+			<li><a href="#caesar">Caesar Encryption</a></li>
+			<li><a href="#polygons">Colored Polygons</a></li>
+			<li><a href="#honeycomb">Honeycomb</a></li>
 		</ol>
 		
 		<ol>						
@@ -101,7 +104,8 @@ main
 endmain				
 				</textarea>	
 				<p><a href="#top">Back to top</a>
-			</li>	
+			</li>
+			<hr>	
 			
 			<p><br>
 			<h3 id="fact"><li>Factorial</h3>
@@ -148,6 +152,7 @@ endmain
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
 			<p><br>
 			<h3 id="gcd"><li>Greatest Common Divisor</h3>
@@ -205,6 +210,7 @@ endmain
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
 			<p><br>
 			<h3 id="numGuess"><li>Number Guessing Game</h3>
@@ -289,6 +295,7 @@ endmain
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
 			<p><br>
 			<h3 id="polygon"><li>Regular Polygon</h3>
@@ -367,6 +374,7 @@ endmain
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
 			<p><br>
 			<h3 id="stair"><li>Turtle Stair</h3>
@@ -415,6 +423,235 @@ endmain
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="caesar"><li>Caesar Encryption</h3>
+				<p>Implement Caesar Encryption: <a href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank">https://en.wikipedia.org/wiki/Caesar_cipher</a>.
+				<br><img src="../images/ch2_caesar.png" alt="">
+				<p>The output of the program should be: <b>fdhvdu - caesar</b>
+				<p>
+				<textarea rows="24" cols="150" readonly>
+program caesarEncryption
+import Strings
+import IO
+
+operation encrypt(parameter abc : string, parameter str : string) : string 
+	// IMPLEMENT ME
+endoperation
+
+operation decrypt(parameter abc : string, parameter str : string) : string 
+	// IMPLEMENT ME
+endoperation
+
+main 
+	variable abc : string
+	variable str : string
+	variable encryptedStr : string
+	variable decryptedStr : string
+	abc := "abcdefghijklmnopqrstuvwxyz"
+	str := "caesar"
+	encryptedStr := encrypt(abc, str)				
+	decryptedStr := decrypt(abc, encryptedStr) 	
+	IO.writeString(encryptedStr & " - " & decryptedStr)
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_7" onclick="toggleTextArea('ch1_sol_7', 'ch1_btn_7')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_7" rows="54" cols="150" readonly style="display:none;">
+program caesarEncryption
+import Strings
+import IO
+
+operation encrypt(parameter abc : string, parameter str : string) : string 
+	variable encryptedString : string
+	variable i : integer
+	loop 
+		if i >= Strings.lengthOf(str) then exit endif
+		variable index : integer
+		variable encryptedIndex : integer
+		variable subStr : string
+		subStr := Strings.subString(str, i, i)
+		index := Strings.indexOfSubString(abc, subStr)
+		encryptedIndex := (index + 3) mod Strings.lengthOf(abc)
+		variable encryptedSubString : string
+		encryptedSubString := Strings.subString(abc, encryptedIndex, encryptedIndex)
+		encryptedString := encryptedString & encryptedSubString
+		i := i + 1
+	endloop
+	return encryptedString 
+endoperation
+
+operation decrypt(parameter abc : string, parameter str : string) : string 
+	variable decryptedString : string
+	variable i : integer
+	loop 
+		if i >= Strings.lengthOf(str) then exit endif
+		variable index : integer
+		variable decryptedIndex : integer
+		variable subStr : string
+		subStr := Strings.subString(str, i, i)
+		index := Strings.indexOfSubString(abc, subStr)
+		decryptedIndex := (index - 3) mod Strings.lengthOf(abc)
+		variable decryptedSubString : string
+		decryptedSubString := Strings.subString(abc, decryptedIndex, decryptedIndex)
+		decryptedString := decryptedString & decryptedSubString
+		i := i + 1
+	endloop
+	return decryptedString 
+endoperation
+
+main 
+	variable abc : string
+	variable str : string
+	variable encryptedStr : string
+	variable decryptedStr : string
+	abc := "abcdefghijklmnopqrstuvwxyz"
+	str := "caesar"
+	encryptedStr := encrypt(abc, str)				
+	decryptedStr := decrypt(abc, encryptedStr) 	
+	IO.writeString(encryptedStr & " - " & decryptedStr)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="polygons"><li>Colored Polygons</h3>
+				<p>Draw the image below, the colors of the polygon are randomized RGB values.
+				<p>Use <b>Turtle.setColorRGB(Mathematics.randomInteger(0, 255), Mathematics.randomInteger(0, 255), Mathematics.randomInteger(0, 255))</b> to set random colors.
+				<br><img src="../images/ch2_polygons.png" alt="">
+				<p>
+				<textarea rows="17" cols="150" readonly>
+program coloredPolygons
+import IO
+import Turtle 
+import Mathematics
+
+main
+	Turtle.setAnimationSpeed(Turtle.Speed.INSTANT)
+	Turtle.setDirection(90)
+	Turtle.setThickness(3)
+	Turtle.setFrameSize(500, 400)
+	Turtle.setPosition(200, 350)
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_8" onclick="toggleTextArea('ch1_sol_8', 'ch1_btn_8')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_8" rows="28" cols="150" readonly style="display:none;">
+program coloredPolygons
+import IO
+import Turtle 
+import Mathematics
+
+main
+	Turtle.setAnimationSpeed(Turtle.Speed.INSTANT)
+	Turtle.setDirection(90)
+	Turtle.setThickness(3)
+	Turtle.setFrameSize(500, 400)
+	Turtle.setPosition(200, 350)
+	variable edges : integer
+	edges := 3
+	loop
+		if edges > 10 then exit endif
+		Turtle.setColorRGB(Mathematics.randomInteger(0, 255), Mathematics.randomInteger(0, 255), Mathematics.randomInteger(0, 255))
+		variable edge : integer
+		edge := 1
+		loop 
+			if edge > edges then exit endif
+			Turtle.forward(100)
+			Turtle.left(360 / edges)
+			edge := edge + 1
+		endloop
+		edges := edges + 1
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="honeycomb"><li>Honeycomb</h3>
+				<p>Draw the image below.
+				<p>Use <b>Turtle.startFilledPolygon(Turtle.Colors.YELLOW))</b> and <b>Turtle.endFilledPolygon()</b> to draw filled polygons.
+				<br><img src="../images/ch2_honeycomb.png" alt="">
+				<p>
+				<textarea rows="16" cols="150" readonly>
+program honeycomb
+import Turtle
+import Mathematics 
+
+main
+	Turtle.setFrameSize(800,800)
+	Turtle.setDirection(90)
+	Turtle.setPosition(300, 300)
+	Turtle.setAnimationSpeed(Turtle.Speed.INSTANT)	
+	Turtle.setThickness(3)
+	
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endmain
+				</textarea>				
+				<p>
+				<button id="ch1_btn_9" onclick="toggleTextArea('ch1_sol_9', 'ch1_btn_9')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_9" rows="41" cols="150" readonly style="display:none;">
+program honeycomb
+import Turtle
+import Mathematics 
+
+main
+	Turtle.setFrameSize(800,800)
+	Turtle.setDirection(90)
+	Turtle.setPosition(300, 300)
+	Turtle.setAnimationSpeed(Turtle.Speed.INSTANT)	
+	Turtle.setThickness(3)
+	
+	variable length : integer
+	length := 50
+	
+	variable i : integer
+	loop 
+		if i > 11 then exit endif
+		variable j : integer 
+		loop 
+			if j > 3 then exit endif
+			variable x : integer
+			x := j * 3 * length + Mathematics.floor((i mod 2) * length * 1.5)
+			variable y : integer
+			y := i * Mathematics.floor((length exp 2 - (length/2) exp 2) exp (0.5))
+			
+			Turtle.setPosition(100+x, 100+y)
+			Turtle.startFilledPolygon(Turtle.Colors.YELLOW)
+			variable edge : integer
+			loop
+				if edge > 5 then exit endif
+				Turtle.forward(length)
+				Turtle.left(360/6)
+				edge := edge + 1
+			endloop	
+			Turtle.endFilledPolygon()
+			j := j + 1
+		endloop
+		i := i + 1
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
 			
 		</ol>
 		<p><br>

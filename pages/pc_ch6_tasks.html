@@ -38,58 +38,338 @@
 			<li><a href="#fact">Factorial</a></li>
 			<li><a href="#palindromes">Palindromes</a></li>
 			<li><a href="#filter">Filter List</a></li>
+			<li><a href="#tree">Turtle Tree</a></li>
 		</ol>
 		
 		<ol>			
 			
 			<p><br>
 			<h3 id="fact"><li>Factorial</h3>
+				<p>Implement the factorial function recursively.
+				<p><img src="../images/ch6_fact.png" alt="">	
 				<p>
-				<p><img src="../images/wip.png" alt="">
+				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
 				<p>
-				<textarea rows="1" cols="150" readonly>
-				</textarea>				
-				<p>
-				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
-				<p>
-				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				<textarea id="ch1_sol_1" rows="21" cols="150" readonly style="display:none;">
+program factorialFunction
+import IO
+
+operation factorial(parameter n : integer) : integer
+	if n = 0 then 				// our termination condition	
+		return 1					
+	else
+		return n * factorial(n - 1)	// fak(n) = n * fak(n-1)
+	endif
+endoperation
+
+main	
+	variable x : integer
+	x := 1
+	loop
+		if x > 5 then exit endif
+		IO.writeInteger(factorial(x)) IO.writeLine()
+		x := x + 1
+	endloop
+endmain
 				</textarea>	
 				
 				<p><a href="#top">Back to top</a>
 			</li>	
+			<hr>
 			
 			<p><br>
 			<h3 id="palindromes"><li>Palindromes</h3>
+				<p>Palindromes are words that read the same forwards as backwards, such as <i>a</i>, <i>aa</i>, <i>aba</i> or <i>abba</i>.
+				<br>Strings like <i>ab</i>, <i>aab</i> or  <i>abca</i> are not palindromes.
+				
+				<p>Your task is to implement a recursive operation which returns true if a string is a palindrome and false otherwise.
+				
+				<p>You can check if the first and last characters are equals, if not, it cannot be a palindrome.
+				<br>If they are, check if the string between these characters is a palindrome.
+				<br>A string that is only 1 or less characters longs, is definately a palindrome.
+				
+				<p>To get single character or substrings you can use the operation <b>Strings.subString(str, startPos, endPos)</b>.
+				<br>For example, <b>Strings.subString("asdf", 0, 1)</b> returns "as" as the result.
+				<br>The index of the last character in a string is <b>Strings.lengthOf(str) – 1</b>.
 				<p>
-				<p><img src="../images/wip.png" alt="">
-				<p>
-				<textarea rows="1" cols="150" readonly>
+				<textarea rows="21" cols="150" readonly>
+program palindromes
+import Strings
+import IO
+
+operation isPalindrome(parameter str : string) : boolean 
+	// IMPLEMENT YOUR SOLUTION HERE
+	
+	// END OF IMPLEMENTATION
+endoperation
+
+main 
+	IO.writeBoolean(isPalindrome("a"))		IO.writeLine()	// true
+	IO.writeBoolean(isPalindrome("aa"))		IO.writeLine()	// true
+	IO.writeBoolean(isPalindrome("aba"))	IO.writeLine()	// true
+	IO.writeBoolean(isPalindrome("abba"))	IO.writeLine()	// true
+	IO.writeBoolean(isPalindrome("abcba"))	IO.writeLine()	// true
+	IO.writeBoolean(isPalindrome("ab"))		IO.writeLine()	// false
+	IO.writeBoolean(isPalindrome("abc"))	IO.writeLine()	// false
+	IO.writeBoolean(isPalindrome("abca"))	IO.writeLine()	// false
+endmain
 				</textarea>				
 				<p>
-				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
+				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
 				<p>
-				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				<textarea id="ch1_sol_2" rows="33" cols="150" readonly style="display:none;">
+program palindromes
+import Strings
+import IO
+
+operation isPalindrome(parameter str : string) : boolean 
+	if Strings.lengthOf(str) &lt;= 1 then	// if the length of the string is 1 or 0, we have a palindrome
+			return true
+		else
+			variable s1 : string
+			variable s2 : string
+			s1 := Strings.subString(str, 0, 0)		// get the first character
+			s2 := Strings.subString(str, Strings.lengthOf(str) - 1, Strings.lengthOf(str) - 1)	// get the last character
+			if s1 /= s2 then						// if they are not equal
+				return false						// it can not be a palindrome
+			else									// if they are
+				variable newStr : string
+				newStr := Strings.subString(str, 1, Strings.lengthOf(str) - 2)	// get the string without the first and the last character
+				return isPalindrome(newStr)			// and check whether this string is a palindrome
+			endif
+	endif
+endoperation
+
+main 
+	IO.writeBoolean(isPalindrome("a"))		IO.writeLine()
+	IO.writeBoolean(isPalindrome("aa"))		IO.writeLine()
+	IO.writeBoolean(isPalindrome("aba"))	IO.writeLine()
+	IO.writeBoolean(isPalindrome("abba"))	IO.writeLine()
+	IO.writeBoolean(isPalindrome("abcba"))	IO.writeLine()
+	IO.writeBoolean(isPalindrome("ab"))		IO.writeLine()
+	IO.writeBoolean(isPalindrome("abc"))	IO.writeLine()
+	IO.writeBoolean(isPalindrome("abca"))	IO.writeLine()
+endmain
 				</textarea>	
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
 			<p><br>
 			<h3 id="filter"><li>Filter List</h3>
+				<p>Your task is to implement a <b>filter</b> functions which filters our integers from a list depending on a specific condition.
+				<br>If the condition is true, the value remains in the filtered list, if not, the value is filtered out.
+				<br>The condition is specified by a lambda expression, which accepts an integer and returns a boolean.
+				<p>In the template below, you will already find one invocation of the <b>filter</b> function.
+				<br>The condition is <b>x mod 2 = 0</b>, meaning the lambda expression will return true for all even numbers.
+				<br>When we invoke <b>filter</b> passing it <b>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</b> as well as this condition, we get <b>[2, 4, 6, 8, 10]</b> as a result.
+	
+				<p>The operation <b>filter2</b> is the actual implementation of our <b>filter</b> function.
+				<br>In addition to the list and the lambda expression, it accepts a filtered list and the current position in the unfiltered list.
+				<br>The idea is to return the filtered list when <b>i</b> reaches the end of the unfiltered list.
+				<br>As as it is not the case, we want to apply the lambda expression to the current entry in the list and move on to the next position recursively.
+				
+				<p>Test your implementation with additional conditions.
+				<br>Filter out all even numbers.
+				<br>Filter out all numbers less than 6.
 				<p>
-				<p><img src="../images/wip.png" alt="">
+				<textarea rows="39" cols="150" readonly>
+program filterFunction
+import IO
+import Lists
+import Strings
+
+// this operation acts as an interface for the actual filter implementation 
+operation filter(parameter l : list<integer>,  						// it accepts a list which must be filtered
+		parameter f : operation(integer) : boolean) : list<integer>		// and an operation which defines the filter condition
+	return filter2(l, f, [], 0)							// invocation of the actual filter operation
+endoperation
+
+// this is the actual filter implementation
+operation filter2(parameter l : list<integer>, 						// it accepts a list which must be filtered
+					parameter f : operation(integer) : boolean, 	// an operation which defines the filter condition
+					parameter lFiltered : list<integer>, 		// a list with already filtered integers
+					parameter i : integer) : list<integer>		// and the current position					
+	// IMPLEMENT YOUR SOLUTION FOR filter2 HERE
+	
+	// END OF THE IMPLEMENTATION
+endoperation
+
+main
+	IO.writeString(
+		Strings.genericToString(
+			filter(								// invoke the operation filter
+				[1 .. 10], 						// with the list [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+				operation(parameter x : integer) : boolean		// and a lambda expression
+					if x mod 2 = 0 then				// which returns true for all even numbers
+						return true
+					else
+						return false				// and false otherwise
+					endif										
+				endoperation)) & "\n")					// meaning that all odd numbers will be filtered our
+				
+	// TODO: invoke the operation filter to filter our all even numbers
+	
+	// TODO: invoke the operation filter to filter our all numbers which are less than 6
+endmain
+				</textarea>		
+				<p>The output of the program must be:
+				<p><textarea rows="4" cols="150" readonly>
+[2, 4, 6, 8, 10]
+[1, 3, 5, 7, 9]
+[6, 7, 8, 9, 10]
+				</textarea>					
 				<p>
-				<textarea rows="1" cols="150" readonly>
-				</textarea>				
+				<button id="ch1_btn_3" onclick="toggleTextArea('ch1_sol_3', 'ch1_btn_3')">Show solution</button>
 				<p>
-				<button id="ch1_btn_" onclick="toggleTextArea('ch1_sol_', 'ch1_btn_')">Show solution</button>
-				<p>
-				<textarea id="ch1_sol_" rows="1" cols="150" readonly style="display:none;">
+				<textarea id="ch1_sol_3" rows="49" cols="150" readonly style="display:none;">
+program filterFunction
+import IO
+import Lists
+import Strings
+
+operation filter(parameter l : list<integer>,  
+					parameter f : operation(integer) : boolean) : list<integer>	
+	return filter2(l, f, [], 0)	
+endoperation
+
+operation filter2(parameter l : list<integer>, 	
+					parameter f : operation(integer) : boolean, 
+					parameter lFiltered : list<integer>, 		
+					parameter i : integer) : list<integer>		
+	if i = Lists.lengthOf(l) then								
+		return lFiltered 										
+	elseif f(l[i]) then											
+		return filter2(l, f, Lists.append(lFiltered, l[i]), i + 1)	
+	else
+		return filter2(l, f, lFiltered, i + 1)						
+	endif
+endoperation
+
+main
+	IO.writeString(Strings.genericToString(filter([1 .. 10], operation(parameter x : integer) : boolean
+		if x mod 2 = 0 then		
+			return true
+		else
+			return false
+		endif
+	endoperation)) & "\n")
+	
+	IO.writeString(Strings.genericToString(filter([1 .. 10], operation(parameter x : integer) : boolean
+		if x mod 2 = 1 then		
+			return true
+		else
+			return false
+		endif
+	endoperation)) & "\n")
+	
+	IO.writeString(Strings.genericToString(filter([1 .. 10], operation(parameter x : integer) : boolean
+		if x > 5 then		
+			return true
+		else
+			return false
+		endif
+	endoperation)) & "\n")
+endmain
 				</textarea>	
 				
 				<p><a href="#top">Back to top</a>
 			</li>
+			<hr>
 			
+			
+			<p><br>
+			<h3 id="tree"><li>Turtle Tree</h3>
+				<p>Draw a tree using Turtle and recursion to get the image below.
+				<br>Start small by drawing without different colors and thickness, you can add them later.
+				<br>The idea is: every tree consists of a trunk and two branches, each branch is also a tree but slightly shorter than its trunk.
+				<br>Each branch has therefore also two branches, unless they their legth is reduced to a certain threshold.
+				<p><img src="../images/ch6_tree.png" alt="">		
+				<p>
+				<button id="ch1_btn_4" onclick="toggleTextArea('ch1_sol_4', 'ch1_btn_4')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_4" rows="33" cols="150" readonly style="display:none;">
+program turtleTree
+import IO
+import Turtle
+import Mathematics
+
+operation drawTree(parameter length : integer, parameter thickness : integer, parameter green : integer)
+	if green > 255 then green := 255 endif
+	Turtle.setColorRGB(102, green, 0) 
+	if thickness < 1 then thickness := 1 endif
+	Turtle.setThickness(thickness)
+	if (length > 30) then 
+		Turtle.forward(length)
+		Turtle.right(30)
+		drawTree(length-10, thickness-1, green+20)
+		Turtle.left(60)
+		drawTree(length-10, thickness-1, green+20)
+		Turtle.right(30)
+		Turtle.setColorRGB(102, green, 0) 
+		Turtle.backward(length)
+	endif
+endoperation
+
+
+main
+	Turtle.setAnimationSpeed(Turtle.Speed.INSTANT)
+	Turtle.setFrameSize(1000, 800)
+	Turtle.setPosition(500, 700)
+	drawTree(110, 7, 51)
+	Turtle.showCursor(false)
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
+			
+			<p><br>
+			<h3 id="koch"><li>Koch Snowflake</h3>
+				<p>Draw a Koch Snowflake (<a href="https://en.wikipedia.org/wiki/Koch_snowflake" target="_blank">https://en.wikipedia.org/wiki/Koch_snowflake</a>) using Turtle.
+				<br>First try to draw a Koch Curve using recursion.
+				<br>Arrange three Koch Curves in a triangle to create a Koch Snowflake.
+				<p><img src="../images/ch6_koch.png" alt="">		
+				<p>
+				<button id="ch1_btn_5" onclick="toggleTextArea('ch1_sol_5', 'ch1_btn_5')">Show solution</button>
+				<p>
+				<textarea id="ch1_sol_5" rows="33" cols="150" readonly style="display:none;">
+program kochSnowflake
+import Turtle 
+import Mathematics 
+
+operation drawSnowflake(parameter l : integer) 
+	if l <= 5.0 then 
+		Turtle.forward(l)
+	 else 
+		drawSnowflake(Mathematics.floor(l/3))
+		Turtle.left(60)
+		drawSnowflake(Mathematics.floor(l/3))
+		Turtle.right(120)
+		drawSnowflake(Mathematics.floor(l/3))
+		Turtle.left(60)
+		drawSnowflake(Mathematics.floor(l/3))
+	endif	
+endoperation
+  
+main 
+	Turtle.setPosition(100, 100)
+	Turtle.setDirection(90)
+	variable i : integer
+	loop 
+		if i = 3 then exit endif		
+		drawSnowflake(120)
+		Turtle.right(120)
+		i := i + 1
+	endloop
+endmain
+				</textarea>	
+				
+				<p><a href="#top">Back to top</a>
+			</li>
+			<hr>
 		</ol>
 		<p><br>
 	</body>
