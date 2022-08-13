@@ -43,15 +43,48 @@
 			
 			<p><br>
 			<h3 id="swap"><li>wap Values with References</h3>
+				<p>Your task is to:
+				<ol>
+					<li>Declare two variables as integer references in the main procedure, assign two different values to these variables.
+					<br>Afterwards print the values of the variables.</li>
+					<li>Implement a procedure <b>swap</b> which accepts two integer reference parameters.
+					<br>Swap the values of these parameters inside the operation.</li>
+					<li>Invoke the <b>swap</b> procedure from the main procudre and pass the previously declare variables as parameters.
+					<br>Print the values of the variables again, they should now be swapped.</li>
+				</ol>
+				<p>The output of the program could look like this:
 				<p>
-				<p><img src="../images/wip.png" alt="">
-				<p>
-				<textarea rows="1" cols="150" readonly>
-				</textarea>				
+				<textarea rows="5" cols="150" readonly>
+x = 42
+y = 5
+x = 5
+y = 42
+				</textarea>	
 				<p>
 				<button id="ch1_btn_1" onclick="toggleTextArea('ch1_sol_1', 'ch1_btn_1')">Show solution</button>
 				<p>
 				<textarea id="ch1_sol_1" rows="1" cols="150" readonly style="display:none;">
+program swapVars
+import IO
+
+operation swap(parameter a : reference<integer>, parameter b : reference<integer>)
+	variable c : integer
+	c := b@
+	b@ := a@
+	a@ := c
+endoperation
+
+main
+	variable x : reference<integer>
+	variable y : reference<integer>
+	x := reference 42
+	y := reference 5
+	IO.writeString("x = ")	IO.writeInteger(x@)	IO.writeLine()
+	IO.writeString("y = ")	IO.writeInteger(y@)	IO.writeLine()
+	swap(x, y)
+	IO.writeString("x = ")	IO.writeInteger(x@)	IO.writeLine()
+	IO.writeString("y = ")	IO.writeInteger(y@)	IO.writeLine()
+endmain
 				</textarea>	
 				
 				<p><a href="#top">Back to top</a>
@@ -59,15 +92,186 @@
 			
 			<p><br>
 			<h3 id="course"><li>Course Management</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
-				<p>
-				<textarea rows="1" cols="150" readonly>
-				</textarea>				
+				<h4>Type Util</h4>
+				<p>Declare a compostion called <b>Util</b>.
+				<br>This composition should have a hidden integer attribute <b>counter</b>.
+				<br>Futhermore, it should have a visible operation <b>generateNumber()</b> which does not accept any parameters and returns an integer.
+				<br>Each time the operation is called, the value of <b>counter</b> should be incremented by 1 and then returned.				
+				<p>Test your implementation of <b>Util</b>, it should look like this:
+				<p><img src="../images/ch5_course1.png" alt="">
+				
+				<h4>Types Person and Docent</h4>
+				<p>Declare an abstract compostion called <b>Person</b>.
+				<br>A person has a hidden string attribute name, which should be still visible in its subtypes.	
+				<br>Implement an operation <b>getName()</b> which returns the name of the person.
+				<br>This way we can not change the name of a person after its instantiation but have still reading access to it.
+				<p>Now create a non-abstract type <b>Docent</b> as a subtype of <b>Person</b>
+				<p>Test your implementation of <b>Person</b> and <b>Docent</b>, it should look like this:
+				<p><img src="../images/ch5_course2.png" alt="">
+				
+				<h4>Type Student</h4>
+				<p>Declare a non-abstract compostion called <b>Student</b> which is also a subtype of <b>Person</b>.
+				<br>In addition to the inherited features, each student has a <b>immatriculationNumber</b>,
+				<br>which is a hidden integer attribute, but we should still have reading access to it similar to the attibute <b>name</b>.
+				<br>Use the <b>Util</b> operation <b>generateNumber()</b> to generate immatriculation numbers.
+				<p>Test your implementation of <b>Student</b>, it should look like this:
+				<p><img src="../images/ch5_course3.png" alt="">
+				
+				<h4>Type Course</h4>
+				<p>Declare a non-abstract compostion called <b>Course</b>, all attributes should be hidden.
+				<p>Each course has following features:
+				<ul>
+					<li>A name.</li>
+					<li>A maximum number of enrolled students.</li>
+					<li>A reference to a docent.</li>
+					<li>A list of enrolled students, which should also be referenced (e.g. <b>attribute students : list&lt;reference&lt;Student&gt;&gt;</b>).</li>
+					<li>It should be possible to get all the information about a course by using a procedure <b>printInfo()</b>.</li>
+					<li>It should be possible to enrol a student using the procedure <b>enrol(REFERENCE TO A STUDENT)</b>.
+					<br>Be aware that each course has a maximum number of enrolled students.
+					<br>If that number is reached, the enrollment process should fail with a corresponding message on the console.</li>
+				</ul>
+				<p>The test program:
+				<p><textarea rows="26" cols="150" readonly>
+main
+	variable util : Util
+	
+	variable d : reference<Docent>
+	d := reference Docent{name = "Nikita"}
+	
+	variable k : reference<Course>
+	k := reference Course{name = "Programming course", students = [], docent = d, maxNumberOfStudents = 3}
+	
+	variable s1 : reference<Student>
+	s1 := reference Student{name = "Alice", immatriculationNumber = util.generateNumber()}
+	variable s2 : reference<Student>
+	s2 := reference Student{name = "Bob", immatriculationNumber = util.generateNumber()}
+	variable s3 : reference<Student>
+	s3 := reference Student{name = "Charlie", immatriculationNumber = util.generateNumber()}
+	variable s4 : reference<Student>
+	s4 := reference Student{name = "Dave", immatriculationNumber = util.generateNumber()}
+	
+	k@.enrol(s1)
+	k@.enrol(s2)
+	k@.enrol(s3)
+	k@.enrol(s4)
+	
+	k@.printInfo()
+endmain
+				</textarea>			
+				<p>The output of the program could look like this:
+				<p><textarea rows="15" cols="150" readonly>
+Alice: enrollment successful.
+Bob: enrollment successful.
+Charlie: enrollment successful.
+Dave: enrollment is no longer possible.
+Course:
+   Programming course
+Maximun number of students:
+   3
+Docent:
+   Nikita
+Enrolles are: 
+   Alice, immatriculation number: 1
+   Bob, immatriculation number: 2
+   Charlie, immatriculation number: 3
+				</textarea>			
 				<p>
 				<button id="ch1_btn_2" onclick="toggleTextArea('ch1_sol_2', 'ch1_btn_2')">Show solution</button>
 				<p>
-				<textarea id="ch1_sol_2" rows="1" cols="150" readonly style="display:none;">
+				<textarea id="ch1_sol_2" rows="94" cols="150" readonly style="display:none;">
+program courseManagement
+import IO
+import Lists    
+import Strings    
+
+abstract type Person : composition
+	protected attribute name : string
+	
+	operation getName() : string 
+		return name
+	endoperation
+endtype
+
+type Student : composition extends Person  
+	private attribute immatriculationNumber : integer    
+
+	operation getImmatriculationNumber() : integer 
+		return immatriculationNumber 
+	endoperation
+endtype
+
+type Docent : composition extends Person
+endtype
+
+type Course : composition
+	private attribute name : string
+	private attribute students : list<reference<Student>>
+	private attribute docent : reference<Docent>
+	private attribute maxNumberOfStudents : integer
+
+	operation printInfo()
+		IO.writeString("Course:\n   " & name & "\n")
+		IO.writeString("Maximun number of students:\n   " & Strings.integerToString(maxNumberOfStudents) & "\n")
+		IO.writeString("Docent:\n   " & docent@.getName() & "\n")
+		IO.writeString("Enrolles are: \n")
+		variable i : integer    
+		loop
+			variable s : reference<Student>
+			s := students[i]
+			IO.writeString("   " & s@.getName() & ", immatriculation number: " )
+			IO.writeInteger(s@.getImmatriculationNumber())
+			IO.writeLine()
+			i := i + 1
+			if i = Lists.lengthOf(students) then
+				exit
+			endif
+		endloop
+	endoperation
+
+	operation enrol(parameter s : reference<Student>) 
+		if Lists.lengthOf(students) &lt; maxNumberOfStudents then 
+			students := Lists.append(students, s)
+			IO.writeString(s@.getName() & ": enrollment successful.\n")
+		else
+			IO.writeString(s@.getName() & ": enrollment is no longer possible.\n")
+		endif
+	endoperation
+endtype
+
+type Util : composition
+	private attribute counter : integer
+
+	operation generateNumber() : integer  
+		counter := counter + 1
+		return counter
+	endoperation
+endtype
+
+main
+	variable util : Util
+	
+	variable d : reference<Docent>
+	d := reference Docent{name = "Nikita"}
+	
+	variable k : reference<Course>
+	k := reference Course{name = "Programming course", students = [], docent = d, maxNumberOfStudents = 3}
+	
+	variable s1 : reference<Student>
+	s1 := reference Student{name = "Alice", immatriculationNumber = util.generateNumber()}
+	variable s2 : reference<Student>
+	s2 := reference Student{name = "Bob", immatriculationNumber = util.generateNumber()}
+	variable s3 : reference<Student>
+	s3 := reference Student{name = "Charlie", immatriculationNumber = util.generateNumber()}
+	variable s4 : reference<Student>
+	s4 := reference Student{name = "Dave", immatriculationNumber = util.generateNumber()}
+	
+	k@.enrol(s1)
+	k@.enrol(s2)
+	k@.enrol(s3)
+	k@.enrol(s4)
+	
+	k@.printInfo()
+endmain
 				</textarea>	
 				
 				<p><a href="#top">Back to top</a>

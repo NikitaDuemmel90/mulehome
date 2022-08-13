@@ -25,9 +25,8 @@
 			<li><a href="#cars">Scenario: Persons and Cars</a></li>
 			<li><a href="#oop">Object-oriented Programming</a></li>
 			<li><a href="#carsale">Scenario: Car Sale</a></li>
-			<li><a href="#access">Access Modifiers</a></li>
+			<li><a href="#access">Restricting access to data</a></li>
 			<li><a href="#inheritance">Inheritance</a></li>
-			<li><a href="#abstract">Abstract Types</a></li>
 		</ol>
 		
 		<ol>			
@@ -268,7 +267,7 @@ endmain
 			<hr>
 			
 			<p><br>
-			<h3 id="access"><li>Access Modifiers</h3>
+			<h3 id="access"><li>Restricting access to data</h3>
 				<p><img src="../images/ch5_cars7.png" alt="">
 				<p>As we can see, currently we can access the attributes of our object directly, which can lead to a following scenario:
 				<br><i>Bob manipulates the mileage of his car before selling to Alice to get a higher price.</i>
@@ -296,16 +295,166 @@ endmain
 				
 				<p>This is where the concept of inheritance comes into place:
 				<p><img src="../images/ch5_inh2.png" alt="">
-				<p><img src="../images/ch5_inh3.png" alt="">
-				<p><a href="#top">Back to top</a>
-			</li>
-			<hr>
-			
-			<p><br>
-			<h3 id="abstract"><li>Abstract Types</h3>
-				<p>
-				<p><img src="../images/wip.png" alt="">
 				
+				<p>We define a <i>super type</i>, e.g. <b>Vehicle</b> in our case, and place all common attributes and operations into that type.
+				<br>Furthermore, we specify that our <b>Car</b>, <b>Bus</b> and <b>Truck</b> are <i>subtypes</i> of vehicle <b>Vehicle</b>.
+				<br>That means that they inherit all features provided by <b>Vehicle</b> and its own potential super types.
+				<br>Features specific to the subtypes, e.g. <b>Number of passenders</b> remain in the super types.
+				
+				<p><br>				
+				<h4>Implementing inheritance</h4>
+				<p>The code example below demonstrates how we can do it in MuLE.
+				<br>Since the modifier <b>private</b> restricts the visibility of an attribute only to the containing composition,
+				<br>we have to change it to protected, which makes it visible in the containing composition as well as its subtypes.
+				<p><img src="../images/ch5_inh3.png" alt="">
+								
+				<p><br>				
+				<h4>Redefining inhretited operations</h4>
+				<p>In the code example above, the operation <b>readData()</b> prints only the data which is common to all vehicles.
+				<br>If we call this operation on an instance of <b>Truck</b>, we will not get the information about its ton rating.
+				<br>To alleviate this problem, we have to redefine the inherited operation <b>readData()</b>.
+				<p>When redefining, we can simply copy paste the inherited functionality and add new one.
+				<br>This leads to redundant code and should be avoided if possible.
+				<p>In our case, we can call the inherited operation in the redefining operation first using the keyword <b>super</b>, and then add new functionality.
+				<p><img src="../images/ch5_inh4.png" alt="">
+								
+				<p><br>				
+				<h4>Abstract types and operations</h4>
+				<p>Sometimes it makes no sense to create instances from super types as they may lack sufficient informations.
+				<br>In our scenario this may not be entirely the case, but lets pretend that it is and make <b>Vehicle</b> abstract.
+				<br>As a result, we no longer can instantiate it and have to use its subtypes instead.
+				<br>As we see, we can declare a variable using a super type and instantiate it using a subtype without any problems.
+				<br>The static type of the variable is still <b>reference&lt;Vehicle&gt;</b>, however the referenced object is either a <b>Car</b> or any other subtype of <b>Vehicle</b>.
+				<p>Abstract compositions may also have abstract operations.
+				<br>Such operations do not provide any functionality, which is possible since we cannot instantiate an abstract type anyway.
+				<br>However, they <b>must be redefined</b> in the subtypes, otherwise the program will not compile. 
+				<p><img src="../images/ch5_inh5.png" alt="">
+				
+				<p><br>				
+				<h4>Inheritance in action</h4>
+				<p>You will find the complete Vehicles and Persons example in the code below.
+				<br>Copy the code into your eclipse, place a breakpoint in the main procedure, and execute it step by step.
+				<p>Take a closer look at the loop in the main procedure.
+				<br>It includes a <i>let statement</i> which allows us to check what types objects actually have.
+				<br>It acts somewhat similarly to an if statment, it declares a variable with a specific type and if the object in question has that type,
+				<br>assigns the object to that variable and executed the corresponding lines of code where we can use the variable to access type specific features.
+				<textarea rows="116" cols="150" readonly>
+program vehiclesAndPersons
+import IO
+import Strings
+import Lists
+
+type Person : composition
+	attribute name : string
+	attribute myVehicle : reference<Vehicle>
+	
+	operation drive(parameter distance : integer) 
+		if myVehicle = null then
+			IO.writeString(name & " does not own a car.\n")
+		else
+			IO.writeString(name & " drives " & Strings.integerToString(distance) & "km.\n")
+			myVehicle@.drive(distance)
+		endif
+	endoperation
+	
+	operation sell(parameter newOwner : reference<Person>)
+		if newOwner /= null then
+			newOwner@.myVehicle := myVehicle
+			myVehicle := null
+		endif
+	endoperation
+endtype
+
+abstract type Vehicle : composition
+	protected attribute manufacturer : string
+	protected attribute mileage : integer
+	
+	operation drive(parameter distance : integer)
+		mileage := mileage + distance
+	endoperation
+	
+	operation readData()
+		IO.writeString(manufacturer)	
+		IO.writeLine()
+		IO.writeString("Mileage: ")	
+		IO.writeInteger(mileage) 
+		IO.writeLine()
+	endoperation
+endtype
+
+type Car : composition extends Vehicle
+endtype
+
+type Truck : composition extends Vehicle
+	private attribute tonRating : rational
+	
+	override operation readData()
+		super.readData()
+		IO.writeString("Ton rating: ")	
+		IO.writeRational(tonRating) 
+		IO.writeLine()
+	endoperation
+endtype
+
+type Bus : composition extends Vehicle
+	private attribute numberOfPassengers : integer
+	
+	override operation readData()
+		super.readData()
+		IO.writeString("Number of passengers: ")	
+		IO.writeInteger(numberOfPassengers) 
+		IO.writeLine()
+	endoperation
+endtype
+
+main	
+	variable vehicle1 : reference<Vehicle>
+//	vehicle1 := reference Vehicle{manufacturer = "BMW", mileage = 0}	// not possible since Vehicle is abstract
+	vehicle1 := reference Car{manufacturer = "BMW", mileage = 0}
+	
+	variable vehicle2 : reference<Vehicle>
+	vehicle2 := reference Truck{manufacturer = "Daimler", mileage = 0, tonRating = 18}
+	
+	variable vehicle3 : reference<Vehicle>
+	vehicle3 := reference Bus{manufacturer = "MAN", mileage = 0, numberOfPassengers = 40}
+	
+	// iterate through a list of vehicles
+	variable vehicles : list<reference<Vehicle>>
+	vehicles := [vehicle1, vehicle2, vehicle3]
+	IO.writeString("Vehicles in the list:\n")
+	variable i : integer
+	loop
+		if i >= Lists.lengthOf(vehicles) then exit endif
+		// let statements allows us to perform a type check on objects in an inheritance hierarchy
+		// for example, if the vehicle is a Truck, the corresponding block will be executed
+		// also we will have a variable with the correct static type in this block 
+		// which we can use to access type specific attributes and operations
+		let variable v : reference<Truck> be vehicles[i] do 
+			IO.writeString("It's a Truck\n")
+		elselet variable v : reference<Bus> be vehicles[i] do
+			IO.writeString("It's a Bus\n")
+		elselet variable v : reference<Car> be vehicles[i] do 
+			IO.writeString("It's a car\n")		
+		else
+			IO.writeString("It's some other Vehicle\n")
+		endlet
+		vehicles[i]@.readData()
+		IO.writeLine()
+		i := i + 1
+	endloop
+	
+	IO.writeLine()
+	variable alice : reference<Person>
+	alice := reference Person{name = "Alice", myVehicle = vehicle1}
+	IO.writeString("Alice's Vehicle:\n")
+	alice@.myVehicle@.readData()	IO.writeLine()
+	
+	variable bob : reference<Person>
+	bob := reference Person{name = "Bob", myVehicle = vehicle2}	
+	IO.writeString("Bob's Vehicle:\n")
+	bob@.myVehicle@.readData()	IO.writeLine()
+endmain
+				</textarea>	
 				<p><a href="#top">Back to top</a>
 			</li>
 			<hr>
